@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../utils/colors.dart';
 import '../utils/dimension.dart';
-import 'app_icon.dart';
-import 'big_text.dart';
 
-class IconFieldWidget extends StatelessWidget {
+class TextFieldRightIcon extends StatelessWidget {
 
   final TextEditingController textEditingController;
   final String textHint;
@@ -13,15 +11,17 @@ class IconFieldWidget extends StatelessWidget {
   final TextInputType textInputType;
   final bool isPassword;
   final bool isEnabled;
+  final int maxLines;
 
-  IconFieldWidget({
+  TextFieldRightIcon({
     super.key,
     required this.textEditingController,
     required this.textHint,
     required this.icon,
     required this.textInputType,
     this.isPassword = false,
-    this.isEnabled = true
+    this.isEnabled = true,
+    this.maxLines = 1
   });
 
   @override
@@ -41,13 +41,19 @@ class IconFieldWidget extends StatelessWidget {
           ]
       ),
       child: TextField(
+        enabled: isEnabled,
         keyboardType: textInputType,
         controller: textEditingController,
         obscureText: isPassword,
-        enabled: isEnabled,
+        maxLines: maxLines,
         decoration: InputDecoration(
           hintText: textHint,
-          prefixIcon: Icon(icon, color: AppColors.mainColor,),
+          suffixIcon: GestureDetector(
+            onTap: (){
+              textEditingController.text = "";
+            },
+            child: Icon(icon, color: AppColors.mainColor,)
+          ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular((Dimensions.radius15)),
             borderSide: BorderSide(
@@ -63,6 +69,13 @@ class IconFieldWidget extends StatelessWidget {
             ),
           ),
           border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular((Dimensions.radius15)),
+            borderSide: BorderSide(
+                width: 1.0,
+                color: Colors.transparent
+            ),
+          ),
+          disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular((Dimensions.radius15)),
             borderSide: BorderSide(
                 width: 1.0,

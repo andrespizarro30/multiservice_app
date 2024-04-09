@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       //home: SignInPage(),
-      initialRoute: RouteHelper.mainMenu,
+      initialRoute: RouteHelper.getMain(),
       getPages: RouteHelper.routes,
     );
   }

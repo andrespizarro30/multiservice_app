@@ -5,13 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:multiservice_app/controllers/select_address_page_controller.dart';
+import 'package:multiservice_app/routes/routes_helper.dart';
 import 'package:multiservice_app/utils/colors.dart';
 import 'package:multiservice_app/utils/dimension.dart';
 import 'package:multiservice_app/widgets/icon_text_widget.dart';
 
-import '../widgets/app_icon.dart';
-import '../widgets/big_text.dart';
-import '../widgets/small_text.dart';
+import '../../models/address_details_model.dart';
+import '../../widgets/app_icon.dart';
+import '../../widgets/big_text.dart';
+import '../../widgets/small_text.dart';
 
 class SelectAddressPage extends StatelessWidget {
 
@@ -27,7 +29,7 @@ class SelectAddressPage extends StatelessWidget {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: (){
-            Navigator.pop(context);
+            Navigator.pop(context,"");
           },
           child: Icon(Icons.close)
         ),
@@ -53,7 +55,11 @@ class SelectAddressPage extends StatelessWidget {
               onMapCreated: (GoogleMapController googleMapController){
                 _controllerGoogleMap.complete(googleMapController);
                 newGoogleMapController = googleMapController;
-                controller.getCurrentLocation();
+                if(controller.placesInfoModel.result == null){
+                  controller.getCurrentLocation();
+                }else{
+                  controller.updatePage();
+                }
               }
             ),
             Positioned(
@@ -95,19 +101,22 @@ class SelectAddressPage extends StatelessWidget {
                           Column(
                             children: [
                               BigText(
-                                  text: controller.placeAddress.isNotEmpty ? "${controller.placeAddress["locality"]!}, ${controller.placeAddress["administrative_area_level_1"]!}" : "-",
+                                  text: controller.placeAddress.isNotEmpty ? "${controller.placeAddress["locality"] != null ? controller.placeAddress["locality"]! : ""}, ${controller.placeAddress["administrative_area_level_1"] != null ? controller.placeAddress["administrative_area_level_1"]! : "" }" : "-",
                                   color: AppColors.mainBlackColor
                               ),
                               SmallText(
-                                text: controller.placeAddress.isNotEmpty ? controller.placeAddress["country"]! : "-",
+                                text: controller.placeAddress.isNotEmpty ? controller.placeAddress["country"] != null ? controller.placeAddress["country"]! : "" : "-",
                                 color: AppColors.mainBlackColor,
                                 size: 14,
                               )
                             ],
                           ),
+                          SizedBox(width: Dimensions.width10,),
                           GestureDetector(
                             onTap: ()async{
-                              controller.getCurrentLocation();
+                              if(controller.placesInfoModel.result == null){
+                                controller.getCurrentLocation();
+                              }
                             },
                             child: Container(
                               width: Dimensions.screenWidth/2,
@@ -130,10 +139,13 @@ class SelectAddressPage extends StatelessWidget {
                       ),
                     ),
                     ElevatedButton(
-                        onPressed: (){
-
-                        },
-                        child: BigText(text: "Confirma dirección",color: Colors.white,),
+                      onPressed: () async{
+                        var close_address_page = await Get.toNamed(RouteHelper.getConfirmAddress());
+                        if(close_address_page == "close_address_page"){
+                          Navigator.pop(context,"load_address");
+                        }
+                      },
+                      child: BigText(text: "Confirma dirección",color: Colors.white,),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.mainColor,
                         minimumSize: Size(Dimensions.screenWidth * 0.9, Dimensions.height40 * 1.5)

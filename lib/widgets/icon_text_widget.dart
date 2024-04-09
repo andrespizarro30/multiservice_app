@@ -7,11 +7,13 @@ class IconTextWidget extends StatelessWidget {
 
   ApplIcon applIcon;
   BigText bigText;
+  Color borderColor;
 
   IconTextWidget({
     super.key,
     required this.applIcon,
-    required this.bigText
+    required this.bigText,
+    this.borderColor = Colors.grey
   });
 
   @override
@@ -27,7 +29,7 @@ class IconTextWidget extends StatelessWidget {
       ),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(Dimensions.radius30)),
-          border: Border.all(color: Colors.grey.shade200),
+          border: Border.all(color: borderColor),
           color: Colors.white,
           boxShadow: [
             BoxShadow(

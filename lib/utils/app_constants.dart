@@ -10,8 +10,11 @@ class AppConstants{
   static const String GOOGLEMAPSIOSKEY = "AIzaSyB3gCARPJjOJlVD-HWqHYxUpwC2T-ZnxYg";
 
   static const String GEOCODINGKEY = "AIzaSyCBDQ2l_f4ksZaSzkCqhNsOhdHfbU5lKqA";
+  static const String PLACESCODINGKEY = "AIzaSyCBDQ2l_f4ksZaSzkCqhNsOhdHfbU5lKqA";
 
   static const String TOKEN = "";
+
+  static const String ADDRESSSAVED = "AddressSaved";
 
 
 }

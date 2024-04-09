@@ -7,13 +7,15 @@ class SmallText extends StatelessWidget {
   double size;
   double height;
   TextOverflow overflow;
+  int maxLines;
 
   SmallText({super.key,
     required this.text,
     this.color = const Color(0xFFccc7c5),
     this.size = 12,
     this.height = 1.2,
-    this.overflow = TextOverflow.visible
+    this.overflow = TextOverflow.visible,
+    this.maxLines = 2
   });
 
   @override
@@ -24,8 +26,10 @@ class SmallText extends StatelessWidget {
           color: color,
           fontFamily: 'Roboto',
           fontSize: size,
-          height: height
+          height: height,
+          overflow: overflow
       ),
+      maxLines: maxLines,
       overflow: overflow,
     );
   }
