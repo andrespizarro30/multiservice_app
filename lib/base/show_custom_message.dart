@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../widgets/big_text.dart';
 
-void showCustomSnackBar(String message,{bool isError=true,String title="Error"}){
+void showCustomSnackBar(String message,{bool isError=true,String title="Error", Color backgroundColor = Colors.redAccent}){
 
   Get.snackbar(
       title,
@@ -17,7 +17,7 @@ void showCustomSnackBar(String message,{bool isError=true,String title="Error"})
       ),
       colorText: Colors.white,
       snackPosition: SnackPosition.TOP,
-      backgroundColor: Colors.redAccent
+      backgroundColor: backgroundColor
   );
 
 }

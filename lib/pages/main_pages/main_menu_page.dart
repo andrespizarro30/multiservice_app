@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:multiservice_app/routes/routes_helper.dart';
 import 'package:multiservice_app/widgets/big_text.dart';
 import 'package:multiservice_app/widgets/small_text.dart';
 
@@ -12,16 +14,12 @@ class MainMenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Container(
-          margin: EdgeInsets.only(left: Dimensions.width30),
-          child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            BigText(text: "Servicios"),
-          ],
-        ),
+          margin: EdgeInsets.only(left: Dimensions.width10*1.5),
+          child: BigText(text: "Servicios")
         ),
         mainServicesScrollView(),
       ],
@@ -61,19 +59,24 @@ class MainMenuPage extends StatelessWidget {
                     ),
                   ),
                   SmallText(text: "Servicio ${index}"),
-                  Container(
-                    width:Dimensions.screenWidth/3.5,
-                    height: Dimensions.screenHeight/8,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(Dimensions.radius20),
-                        color: Colors.white38,
-                        image: DecorationImage(
-                            fit: BoxFit.scaleDown,
-                            image: ExactAssetImage(
-                              "assets/image/test_image.png",
-                              scale: 1,
-                            )
-                        )
+                  GestureDetector(
+                    onTap: (){
+                      Get.toNamed(RouteHelper.getChatList());
+                    },
+                    child: Container(
+                      width:Dimensions.screenWidth/3.5,
+                      height: Dimensions.screenHeight/8,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Dimensions.radius20),
+                          color: Colors.white38,
+                          image: DecorationImage(
+                              fit: BoxFit.scaleDown,
+                              image: ExactAssetImage(
+                                "assets/image/test_image.png",
+                                scale: 1,
+                              )
+                          )
+                      ),
                     ),
                   ),
                   SmallText(text: "Servicio ${index}"),

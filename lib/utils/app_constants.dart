@@ -16,5 +16,9 @@ class AppConstants{
 
   static const String ADDRESSSAVED = "AddressSaved";
 
+  static const String FIRESTORE_USERS_COLLECTION = "users";
+  static const String FIRESTORE_CHAT_COLLECTION = "chat_rooms";
+  static const String FIRESTORE_CHAT_MESSAGES_COLLECTION = "messages";
+
 
 }

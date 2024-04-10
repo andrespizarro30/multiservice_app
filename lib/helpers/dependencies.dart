@@ -1,7 +1,13 @@
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:multiservice_app/controllers/authentication_controller.dart';
+import 'package:multiservice_app/controllers/chat_controller.dart';
 import 'package:multiservice_app/controllers/select_address_page_controller.dart';
+import 'package:multiservice_app/repositories/authentication_repository.dart';
+import 'package:multiservice_app/repositories/chat_repository.dart';
 import 'package:multiservice_app/repositories/google_map_repository.dart';
 import 'package:multiservice_app/repositories/main_page_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,15 +23,27 @@ Future<void> init() async{
   //Shared preferences
   Get.lazyPut(()=> sharedPreferences);
 
+  //Firebase instances
+  final firebaseAuth = FirebaseAuth.instance;
+  Get.lazyPut(()=> firebaseAuth);
+
+  final firebaseStore = FirebaseFirestore.instance;
+  Get.lazyPut(()=> firebaseAuth);
+  Get.lazyPut(()=> firebaseStore);
+
   //api client
   Get.lazyPut(()=>GoogleMapsApiClient(appBaseUrl: AppConstants.GOOGLE_MAPS_API_BASE_URL));
 
   //repos
   Get.lazyPut(()=>MainPageRepo(sharedPreferences: Get.find()));
   Get.lazyPut(()=>GoogleMapRepo(googleMapsApiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.lazyPut(()=>AuthenticationRepo(firebaseAuth: Get.find(), firebaseFirestore: Get.find()));
+  Get.lazyPut(()=>ChatRepo(firebaseAuth: Get.find(),firebaseFirestore: Get.find()));
 
   //controllers
   Get.lazyPut(()=>MainPageController(mainPageRepo: Get.find()));
   Get.lazyPut(()=>SelectAddressPageController(googleMapRepo: Get.find()));
+  Get.lazyPut(()=>AuthenticationPageController(authRepo: Get.find()));
+  Get.lazyPut(()=>ChatPageController(chatRepo: Get.find()));
 
 }
