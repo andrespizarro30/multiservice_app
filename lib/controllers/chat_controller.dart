@@ -11,9 +11,9 @@ class ChatPageController extends GetxController implements GetxService{
     required this.chatRepo
   });
 
-  Future<void> sendMessage(String receiverId,String message, String token) async{
+  Future<void> sendMessage(String receiverId,String message, String receiverToken) async{
 
-    await chatRepo.sendMessage(receiverId, message, token);
+    await chatRepo.sendMessage(receiverId, message, receiverToken);
 
   }
 

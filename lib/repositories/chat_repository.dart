@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:multiservice_app/models/chat_message_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/app_constants.dart';
 
@@ -15,18 +16,21 @@ class ChatRepo{
   FirebaseAuth firebaseAuth;
   FirebaseFirestore firebaseFirestore;
   FirebaseMessaging firebaseMessaging;
+  SharedPreferences sharedPreferences;
 
   ChatRepo({
     required this.firebaseAuth,
     required this.firebaseFirestore,
-    required this.firebaseMessaging
+    required this.firebaseMessaging,
+    required this.sharedPreferences
   });
 
-  Future<void> sendMessage(String receiverId,String message,String token) async{
+  Future<void> sendMessage(String receiverId,String message,String receiverToken) async{
 
     final String currentUserId = firebaseAuth.currentUser!.uid;
     final String currentUserEmail = firebaseAuth.currentUser!.email!;
     final Timestamp timestamp = Timestamp.now();
+    final String myToken = sharedPreferences.getString(AppConstants.FIRESTORE_TOKENS)!;
 
     ChatMessageModel chatMessageModel = ChatMessageModel(
         senderId: currentUserId,
@@ -64,9 +68,9 @@ class ChatRepo{
                 "receiverId": chatMessageModel.receiverId,
                 "message": chatMessageModel.message,
                 "timestamp": chatMessageModel.timestamp.toString(),
-                "token": token
+                "token": myToken
               },
-              "to": token
+              "to": receiverToken
             };
 
             var bodyEncoded = json.encode(body);

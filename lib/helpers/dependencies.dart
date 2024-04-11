@@ -41,7 +41,7 @@ Future<void> init() async{
   Get.lazyPut(()=>MainPageRepo(sharedPreferences: Get.find()));
   Get.lazyPut(()=>GoogleMapRepo(googleMapsApiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(()=>AuthenticationRepo(firebaseAuth: Get.find(), firebaseFirestore: Get.find(), sharedPreferences: Get.find()));
-  Get.lazyPut(()=>ChatRepo(firebaseAuth: Get.find(),firebaseFirestore: Get.find(), firebaseMessaging: Get.find()));
+  Get.lazyPut(()=>ChatRepo(firebaseAuth: Get.find(),firebaseFirestore: Get.find(), firebaseMessaging: Get.find(), sharedPreferences: Get.find()));
 
   //controllers
   Get.lazyPut(()=>MainPageController(mainPageRepo: Get.find()));

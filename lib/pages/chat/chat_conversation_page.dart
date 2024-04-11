@@ -13,13 +13,13 @@ class ChatConversationPage extends StatelessWidget {
 
   String receiverUserEmail;
   String receiverUserID;
-  String token;
+  String receiverToken;
 
   ChatConversationPage({
     super.key,
     required this.receiverUserEmail,
     required this.receiverUserID,
-    required this.token
+    required this.receiverToken
   });
 
   @override
@@ -113,7 +113,7 @@ class ChatConversationPage extends StatelessWidget {
 
   void sendMessage(ChatPageController controller,TextEditingController messageController) async{
     if(messageController.text.isNotEmpty){
-      await controller.sendMessage(receiverUserID, messageController.text, token);
+      await controller.sendMessage(receiverUserID, messageController.text, receiverToken);
       messageController.clear();
     }
   }
