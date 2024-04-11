@@ -43,7 +43,7 @@ class RouteHelper{
           var receiverUserEmail = Get.parameters['receiverUserEmail'];
           var receiverUserID = Get.parameters['receiverUserID'];
           var token = Get.parameters['token'];
-          return ChatConversationPage(receiverUserEmail: receiverUserEmail!,receiverUserID: receiverUserID!, token: token!,);
+          return ChatConversationPage(receiverUserEmail: receiverUserEmail!,receiverUserID: receiverUserID!, receiverToken: token!,);
         }
     ),
   ];
