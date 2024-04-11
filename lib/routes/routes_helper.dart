@@ -25,7 +25,7 @@ class RouteHelper{
   static String getSearchAddress()=>'$searchAddressPage';
   static String getSignUp()=>'$signUpPage';
   static String getChatList()=>'$chatListPage';
-  static String getChatConversation(String receiverUserEmail, String receiverUserID)=>'$chatConversationPage?receiverUserEmail=$receiverUserEmail&receiverUserID=$receiverUserID';
+  static String getChatConversation(String receiverUserEmail, String receiverUserID, String token)=>'$chatConversationPage?receiverUserEmail=$receiverUserEmail&receiverUserID=$receiverUserID&token=$token';
   //static String getPopularFood(int pageId,String page)=>'$popularFood?pageId=$pageId&page=$page';
   //static String getRecommendedFood(int pageId,String page)=>'$recommendedFood?pageId=$pageId&page=$page';
   //static String getDrinks(int pageId,String page)=>'$drinks?pageId=$pageId&page=$page';
@@ -42,7 +42,8 @@ class RouteHelper{
         page: (){
           var receiverUserEmail = Get.parameters['receiverUserEmail'];
           var receiverUserID = Get.parameters['receiverUserID'];
-          return ChatConversationPage(receiverUserEmail: receiverUserEmail!,receiverUserID: receiverUserID!);
+          var token = Get.parameters['token'];
+          return ChatConversationPage(receiverUserEmail: receiverUserEmail!,receiverUserID: receiverUserID!, token: token!,);
         }
     ),
   ];

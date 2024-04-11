@@ -13,11 +13,13 @@ class ChatConversationPage extends StatelessWidget {
 
   String receiverUserEmail;
   String receiverUserID;
+  String token;
 
   ChatConversationPage({
     super.key,
     required this.receiverUserEmail,
-    required this.receiverUserID
+    required this.receiverUserID,
+    required this.token
   });
 
   @override
@@ -45,6 +47,9 @@ class ChatConversationPage extends StatelessWidget {
   }
 
   Widget buildMessageList(ChatPageController controller,FirebaseAuth firebaseAuth,String receiverUserID){
+
+    ScrollController listScrollController = ScrollController();
+
     return StreamBuilder(
         stream: controller.getMessage(firebaseAuth.currentUser!.uid, receiverUserID),
         builder: (context,snapshot){
@@ -53,15 +58,16 @@ class ChatConversationPage extends StatelessWidget {
           snapshot.connectionState == ConnectionState.waiting ?
           Center(child: const Text("Cargando mensajes...")) :
           ListView(
-            children: snapshot.data!.docs!
-                .map<Widget>((doc) => buildMessageItem(firebaseAuth,doc))
-                .toList(),
+            controller: listScrollController,
+            children: snapshot.data!.docs!.map<Widget>((doc){
+              return buildMessageItem(firebaseAuth,doc,listScrollController);
+            }).toList(),
           );
         }
     );
   }
 
-  Widget buildMessageItem(FirebaseAuth firebaseAuth,DocumentSnapshot document){
+  Widget buildMessageItem(FirebaseAuth firebaseAuth,DocumentSnapshot document,ScrollController listScrollController){
     Map<String,dynamic> data = document.data() as Map<String,dynamic>;
 
     var alignment = (data["senderId"] == firebaseAuth.currentUser!.uid) ?
@@ -107,7 +113,7 @@ class ChatConversationPage extends StatelessWidget {
 
   void sendMessage(ChatPageController controller,TextEditingController messageController) async{
     if(messageController.text.isNotEmpty){
-      await controller.sendMessage(receiverUserID, messageController.text);
+      await controller.sendMessage(receiverUserID, messageController.text, token);
       messageController.clear();
     }
   }

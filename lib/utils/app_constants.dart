@@ -19,6 +19,9 @@ class AppConstants{
   static const String FIRESTORE_USERS_COLLECTION = "users";
   static const String FIRESTORE_CHAT_COLLECTION = "chat_rooms";
   static const String FIRESTORE_CHAT_MESSAGES_COLLECTION = "messages";
+  static const String FIRESTORE_TOKENS = "token";
+
+  static const String FIREBASE_MESSAGING_AUTH_TOKEN = "AAAAL5oC0kA:APA91bEEb8HjTrHOHetu76dafxoeynF-rlfCmV0x259idztXvxB4UtJGlVz_mqu5fSXfdWlhq9ZUPHbxoIX4-wiGghY2kUJaxop2TRbZqCgvoD8o6qoAnnagAb0Bsn2SkYUb98ebid99";
 
 
 }

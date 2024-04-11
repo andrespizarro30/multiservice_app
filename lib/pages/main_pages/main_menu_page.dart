@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:multiservice_app/push_notifications/push_notification_system.dart';
 import 'package:multiservice_app/routes/routes_helper.dart';
 import 'package:multiservice_app/widgets/big_text.dart';
 import 'package:multiservice_app/widgets/small_text.dart';
@@ -43,19 +44,24 @@ class MainMenuPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
-                    width:Dimensions.screenWidth/3.5,
-                    height: Dimensions.screenHeight/8,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(Dimensions.radius20),
-                        color: Colors.white38,
-                        image: DecorationImage(
-                            fit: BoxFit.scaleDown,
-                            image: ExactAssetImage(
-                              "assets/image/test_image.png",
-                              scale: 1,
-                            )
-                        )
+                  GestureDetector(
+                    onTap: (){
+
+                    },
+                    child: Container(
+                      width:Dimensions.screenWidth/3.5,
+                      height: Dimensions.screenHeight/8,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Dimensions.radius20),
+                          color: Colors.white38,
+                          image: DecorationImage(
+                              fit: BoxFit.scaleDown,
+                              image: ExactAssetImage(
+                                "assets/image/test_image.png",
+                                scale: 1,
+                              )
+                          )
+                      ),
                     ),
                   ),
                   SmallText(text: "Servicio ${index}"),

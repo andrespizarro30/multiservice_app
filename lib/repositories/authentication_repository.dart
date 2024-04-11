@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:multiservice_app/utils/app_constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/sign_up_model.dart';
 
@@ -9,10 +10,12 @@ class AuthenticationRepo{
 
   FirebaseAuth firebaseAuth;
   FirebaseFirestore firebaseFirestore;
+  SharedPreferences sharedPreferences;
 
   AuthenticationRepo({
     required this.firebaseAuth,
-    required this.firebaseFirestore
+    required this.firebaseFirestore,
+    required this.sharedPreferences
   });
 
   Future<UserCredential> signUpWithEmailAndPassword(SignUpBody signUpBody)async{
@@ -33,10 +36,13 @@ class AuthenticationRepo{
     try{
       UserCredential userCredential = await firebaseAuth.signInWithEmailAndPassword(email: signUpBody.email!, password: signUpBody.password!);
 
+      String token = sharedPreferences.getString(AppConstants.FIRESTORE_TOKENS)!;
+
       firebaseFirestore.collection(AppConstants.FIRESTORE_USERS_COLLECTION).doc(userCredential.user!.uid).set(
         {
           'uid': userCredential.user!.uid!,
-          'email': userCredential.user!.email!
+          'email': userCredential.user!.email!,
+          'token': token
         },
         SetOptions(merge: true)
       );

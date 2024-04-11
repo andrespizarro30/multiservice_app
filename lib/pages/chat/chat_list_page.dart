@@ -44,7 +44,7 @@ class ChatListPage extends StatelessWidget {
       return ListTile(
         title: Text(data["email"]),
         onTap: (){
-          Get.toNamed(RouteHelper.getChatConversation(data['email'],data["uid"]));
+          Get.toNamed(RouteHelper.getChatConversation(data['email'],data["uid"],data['token']));
         },
       );
     }else{

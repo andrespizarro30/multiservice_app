@@ -13,6 +13,7 @@ import 'package:multiservice_app/widgets/icon_field_widget.dart';
 import 'package:multiservice_app/widgets/icon_text_widget.dart';
 
 import '../../models/address_details_model.dart';
+import '../../push_notifications/push_notification_system.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimension.dart';
 import '../../widgets/app_icon.dart';
@@ -37,6 +38,8 @@ class _MainPageState extends State<MainPage> {
     super.initState();
 
     Get.find<AuthenticationPageController>().verifyCurrentUser();
+
+    initNotificationService();
 
   }
 
@@ -356,6 +359,14 @@ class _MainPageState extends State<MainPage> {
         },
       )
     );
+
+  }
+
+  void initNotificationService() async{
+
+    PushNotificationSystem pushNotificationSystem = PushNotificationSystem(context: context);
+    pushNotificationSystem.initializeCloudMessaging();
+    pushNotificationSystem.generateMessagingToken();
 
   }
 }
