@@ -4,11 +4,15 @@ import 'package:get/get.dart';
 import 'package:multiservice_app/permissions/permissions.dart';
 import 'package:multiservice_app/routes/routes_helper.dart';
 import 'helpers/dependencies.dart' as dep;
+import 'local_notifications/local_notification_service.dart';
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await dep.init();
+  await LocalNotificationService().init();
+
   runApp(const MyApp());
 }
 

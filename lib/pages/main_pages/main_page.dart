@@ -38,6 +38,7 @@ class _MainPageState extends State<MainPage> {
     super.initState();
 
     Get.find<AuthenticationPageController>().verifyCurrentUser();
+    Get.find<MainPageController>().getCurrentAddress();
 
     initNotificationService();
 
@@ -54,8 +55,6 @@ class _MainPageState extends State<MainPage> {
             return GetBuilder<AuthenticationPageController>(builder: (authController){
               return authController.uid != "" || authController.currentFBUserExists ?
                 GetBuilder<MainPageController>(builder: (controller){
-
-                controller.getCurrentAddress();
 
                 return Stack(
                   children: [

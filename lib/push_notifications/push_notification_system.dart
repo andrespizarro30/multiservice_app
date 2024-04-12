@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:multiservice_app/controllers/chat_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../local_notifications/local_notification_service.dart';
 import '../models/chat_message_model.dart';
 import '../routes/routes_helper.dart';
 import '../utils/app_constants.dart';
@@ -46,6 +49,13 @@ class PushNotificationSystem{
         final chatMessageModel = ChatMessageModel.fromJson(remoteMessage.data);
 
         Get.find<ChatPageController>().setPendingMessageNumber(chatMessageModel.receiverId!, chatMessageModel.senderId!);
+
+        if(Platform.isAndroid){
+          LocalNotificationService().showNotificationAndroid(chatMessageModel);
+        }else
+        if(Platform.isIOS){
+          LocalNotificationService().showNotificationIos(chatMessageModel);
+        }
 
       }
     });
