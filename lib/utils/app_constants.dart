@@ -23,5 +23,8 @@ class AppConstants{
 
   static const String FIREBASE_MESSAGING_AUTH_TOKEN = "AAAAL5oC0kA:APA91bEEb8HjTrHOHetu76dafxoeynF-rlfCmV0x259idztXvxB4UtJGlVz_mqu5fSXfdWlhq9ZUPHbxoIX4-wiGghY2kUJaxop2TRbZqCgvoD8o6qoAnnagAb0Bsn2SkYUb98ebid99";
 
+  static const String PENDINGMESSAGESCOUNT = "PendingMessageCount";
+
+  static const String CURRENTPAGE = "CurrentPage";
 
 }

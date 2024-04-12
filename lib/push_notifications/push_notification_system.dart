@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:multiservice_app/controllers/chat_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/chat_message_model.dart';
@@ -28,6 +30,9 @@ class PushNotificationSystem{
       if(remoteMessage != null){
 
         final chatMessageModel = ChatMessageModel.fromJson(remoteMessage.data);
+
+        Get.find<ChatPageController>().setPendingMessageNumber(chatMessageModel.receiverId!, chatMessageModel.senderId!);
+
         takeToCurrentChat(chatMessageModel);
 
       }
@@ -39,7 +44,8 @@ class PushNotificationSystem{
       if(remoteMessage != null){
 
         final chatMessageModel = ChatMessageModel.fromJson(remoteMessage.data);
-        takeToCurrentChat(chatMessageModel);
+
+        Get.find<ChatPageController>().setPendingMessageNumber(chatMessageModel.receiverId!, chatMessageModel.senderId!);
 
       }
     });
@@ -50,8 +56,10 @@ class PushNotificationSystem{
       if(remoteMessage != null){
 
         final chatMessageModel = ChatMessageModel.fromJson(remoteMessage.data);
-        takeToCurrentChat(chatMessageModel);
 
+        Get.find<ChatPageController>().setPendingMessageNumber(chatMessageModel.receiverId!, chatMessageModel.senderId!);
+
+        takeToCurrentChat(chatMessageModel);
       }
     });
 
@@ -87,6 +95,7 @@ class PushNotificationSystem{
       }
     });
     */
+
 
     /*
     showDialog(context: context, barrierDismissible: false, builder: (BuildContext context) => NotificationDialogBox(

@@ -22,8 +22,11 @@ class ChatRepo{
     required this.firebaseAuth,
     required this.firebaseFirestore,
     required this.firebaseMessaging,
-    required this.sharedPreferences
+    required this.sharedPreferences,
   });
+
+  List<DocumentSnapshot> _documents = [];
+  List<DocumentSnapshot> get documents => _documents ;
 
   Future<void> sendMessage(String receiverId,String message,String receiverToken) async{
 
@@ -98,14 +101,81 @@ class ChatRepo{
     ids.sort();
     String chatRoomId = ids.join("_");
 
-    return firebaseFirestore
+    Stream<QuerySnapshot> snapShots = firebaseFirestore
         .collection(AppConstants.FIRESTORE_CHAT_COLLECTION)
         .doc(chatRoomId)
         .collection(AppConstants.FIRESTORE_CHAT_MESSAGES_COLLECTION)
         .orderBy("timestamp",descending: false)
         .snapshots();
 
+    snapShots.forEach((element) {
+      element.docChanges.forEach((element) {
+        if(element.type == DocumentChangeType.added){
+          element.doc;
+        }
+      });
+    });
+
+    return snapShots;
+
   }
+
+  Future<List<DocumentSnapshot<Object?>>> getAllMessages(String currentUserId,String receiverId) async{
+
+    List<String> ids = [currentUserId,receiverId];
+    ids.sort();
+    String chatRoomId = ids.join("_");
+
+    return await firebaseFirestore
+        .collection(AppConstants.FIRESTORE_CHAT_COLLECTION)
+        .doc(chatRoomId)
+        .collection(AppConstants.FIRESTORE_CHAT_MESSAGES_COLLECTION).orderBy("timestamp",descending: false).get().then((value){
+
+      _documents = [];
+
+      value.docs.forEach((element) {
+        _documents.add(element);
+      });
+
+      return _documents;
+
+    });
+
+  }
+
+  Future<List<DocumentSnapshot<Object?>>> getNewMessages(String currentUserId,String receiverId) async{
+
+    List<String> ids = [currentUserId,receiverId];
+    ids.sort();
+    String chatRoomId = ids.join("_");
+
+    return await firebaseFirestore
+        .collection(AppConstants.FIRESTORE_CHAT_COLLECTION)
+        .doc(chatRoomId)
+        .collection(AppConstants.FIRESTORE_CHAT_MESSAGES_COLLECTION).orderBy("timestamp",descending: false).get().then((value){
+
+      _documents = [];
+
+      value.docChanges.forEach((change) {
+
+        if (change.type == DocumentChangeType.added) {
+          _documents.add(change.doc);
+        }
+        if (change.type == DocumentChangeType.modified) {
+
+        }
+        if (change.type == DocumentChangeType.removed) {
+
+        }
+
+      });
+
+      return _documents;
+
+    });
+
+  }
+
 
 
 }

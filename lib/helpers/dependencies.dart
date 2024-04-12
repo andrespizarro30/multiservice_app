@@ -47,6 +47,6 @@ Future<void> init() async{
   Get.lazyPut(()=>MainPageController(mainPageRepo: Get.find()));
   Get.lazyPut(()=>SelectAddressPageController(googleMapRepo: Get.find()));
   Get.lazyPut(()=>AuthenticationPageController(authRepo: Get.find()));
-  Get.lazyPut(()=>ChatPageController(chatRepo: Get.find()));
+  Get.lazyPut(()=>ChatPageController(chatRepo: Get.find(), sharedPreferences: Get.find()));
 
 }
