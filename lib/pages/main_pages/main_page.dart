@@ -35,6 +35,7 @@ class _MainPageState extends State<MainPage> {
 
     Get.find<AuthenticationPageController>().verifyCurrentUser();
     Get.find<MainPageController>().getCurrentAddress();
+    Get.find<MainPageController>().setLocationUpdates();
 
     initNotificationService();
 

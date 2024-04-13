@@ -1,4 +1,7 @@
 
+import 'dart:async';
+
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:multiservice_app/utils/dimension.dart';
 
@@ -108,6 +111,20 @@ class MainPageController extends GetxController implements GetxService{
     });
 
     await getSavedAddress();
+
+  }
+
+  void setLocationUpdates(){
+
+    final LocationSettings locationSettings = LocationSettings(
+      accuracy: LocationAccuracy.bestForNavigation,
+      distanceFilter: 0,
+      timeLimit: Duration(milliseconds: 600000)
+    );
+
+    StreamSubscription<Position> positionStream = Geolocator.getPositionStream(locationSettings: locationSettings).listen((position) {
+      print(position == null ? 'Unknown' : '${position.latitude},${position.longitude}');
+    });
 
   }
 
