@@ -19,6 +19,9 @@ class SelectAddressPageController extends GetxController implements GetxService{
   LatLng _currentPosition = LatLng(0, 0);
   LatLng get currentPosition => _currentPosition;
 
+  LatLng _selectedPosition = LatLng(0, 0);
+  LatLng get selectedPosition => _selectedPosition;
+
   Set<Marker> _currentPositionMarkerSet = {};
   Set<Marker> get currentPositionMarkerSet => _currentPositionMarkerSet;
   set setCurrentPositionMarker(Set<Marker> markerSet){
@@ -42,10 +45,14 @@ class SelectAddressPageController extends GetxController implements GetxService{
 
     Position position = await googleMapRepo.getCurrentLocation();
 
-    _currentPosition = LatLng(position.latitude, position.longitude);
+    if(_selectedPosition.latitude == 0 && _selectedPosition.longitude == 0){
+      _currentPosition = LatLng(position.latitude, position.longitude);
+      searchCoordinateAddress(currentPosition);
+    }
+  }
 
-    searchCoordinateAddress(currentPosition);
-
+  void deleteSelectedLocation() async{
+    _selectedPosition = LatLng(0, 0);
   }
 
   void assignCurrentPositionMarker(){
@@ -91,7 +98,9 @@ class SelectAddressPageController extends GetxController implements GetxService{
 
     _placeAddress["formatted_address"] = _placesInfoModel.result!.formattedAddress!;
 
-    _currentPosition = LatLng(_placesInfoModel.result!.geometry!.location!.lat!, _placesInfoModel.result!.geometry!.location!.lng!);
+    _selectedPosition = LatLng(_placesInfoModel.result!.geometry!.location!.lat!, _placesInfoModel.result!.geometry!.location!.lng!);
+
+    _currentPosition = _selectedPosition;
 
     update();
   }

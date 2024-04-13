@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:multiservice_app/apis/main_api_client.dart';
 import 'package:multiservice_app/models/services_type_model.dart';
@@ -25,6 +24,12 @@ class MainMenuPageController extends GetxController implements GetxService{
   List<Advertising> _advertisingList = [];
   List<Advertising> get advertisingList => _advertisingList;
 
+  bool _isServicesLoad = false;
+  bool get isServicesLoad => _isServicesLoad;
+
+  bool _isAdsLoad = false;
+  bool get isAdsLoad => _isAdsLoad;
+
   Future<List<ServicesList>> getServicesList()async{
 
     _servicesTypeList=[];
@@ -32,6 +37,7 @@ class MainMenuPageController extends GetxController implements GetxService{
     Response response = await mainPageRepo.getServicesList();
     if(response.statusCode == 200){
       _servicesTypeList.addAll(ServicesType.fromJson(response.body).servicesList);
+      _isServicesLoad = true;
     }else{
 
     }
@@ -47,6 +53,7 @@ class MainMenuPageController extends GetxController implements GetxService{
     Response response = await mainPageRepo.getAdvertisingList();
     if(response.statusCode == 200){
       _advertisingList.addAll(AdvertisingList.fromJson(response.body).advertisingList);
+      _isAdsLoad = true;
     }else{
 
     }

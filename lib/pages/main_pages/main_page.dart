@@ -54,6 +54,7 @@ class _MainPageState extends State<MainPage> {
           if(snapshot.hasData){
             return GetBuilder<AuthenticationPageController>(builder: (authController){
               return authController.uid != "" || authController.currentFBUserExists ?
+
                 GetBuilder<MainPageController>(builder: (controller){
 
                 return Stack(
@@ -208,6 +209,7 @@ class _MainPageState extends State<MainPage> {
                                     ),
                                     GestureDetector(
                                       onTap: () async{
+                                        Get.find<SelectAddressPageController>().deleteSelectedLocation();
                                         var response = await Get.toNamed(RouteHelper.getSelectAddress());
                                         if(response == "load_address"){
                                           controller.getSavedAddress();
@@ -248,6 +250,7 @@ class _MainPageState extends State<MainPage> {
                                                         onTap: (){
                                                           controller.selectCurrentAddress(index);
                                                           controller.openAdressRequestContainer();
+                                                          controller.getCurrentAddress();
                                                         },
                                                         child: BigText(text: controller.addressSaved[index].formattedAddress!,linesNumber: 2,)
                                                     ),
