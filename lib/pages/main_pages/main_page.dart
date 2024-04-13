@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,17 +8,14 @@ import 'package:multiservice_app/controllers/select_address_page_controller.dart
 import 'package:multiservice_app/pages/authentication/sign_in_page.dart';
 import 'package:multiservice_app/pages/main_pages/main_menu_page.dart';
 import 'package:multiservice_app/routes/routes_helper.dart';
-import 'package:multiservice_app/widgets/icon_field_widget.dart';
 import 'package:multiservice_app/widgets/icon_text_widget.dart';
 
-import '../../models/address_details_model.dart';
 import '../../push_notifications/push_notification_system.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimension.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/big_text.dart';
 import '../../widgets/small_text.dart';
-import '../authentication/sign_up_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -371,4 +367,5 @@ class _MainPageState extends State<MainPage> {
     pushNotificationSystem.generateMessagingToken();
 
   }
+
 }
