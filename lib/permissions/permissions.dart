@@ -61,6 +61,34 @@ void requestGeolocationPermissions() async{
 
 Future<PermissionStatus> requestStoragePermission() async{
 
+  var permissionStatus =await Permission.storage.status;
+  var permissionStatusCamera;
+
+  if(permissionStatus.isGranted){
+    permissionStatusCamera = await requestCameraPermission();
+  }else
+  if(permissionStatus.isDenied){
+    await Permission.storage.request();
+
+    if(permissionStatus.isGranted){
+      permissionStatusCamera = await requestCameraPermission();
+    }
+  }else if(permissionStatus.isPermanentlyDenied){
+    await Permission.storage.request();
+
+    if(permissionStatus.isGranted){
+      permissionStatusCamera = await requestCameraPermission();
+    }
+  }
+
+  permissionStatus = await Permission.storage.status;
+
+  return permissionStatus;
+
+}
+
+Future<PermissionStatus> requestStoragePermissionIOS() async{
+
   var permissionStatus =await Permission.photos.status;
   var permissionStatusCamera;
 

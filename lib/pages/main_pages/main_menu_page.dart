@@ -374,4 +374,5 @@ class MainMenuPage extends StatelessWidget {
     requestGeolocationPermissions();
   }
 
+
 }

@@ -12,7 +12,7 @@ class MultiporpuseServiceFormDatabase{
 
   Future<Database> CreateTable() async {
 
-    var appDirectory = await getDownloadsDirectory();
+    var appDirectory = Platform.isAndroid ? await getDownloadsDirectory() : await getApplicationDocumentsDirectory();
 
     String appImagesPath = appDirectory!.path;
 

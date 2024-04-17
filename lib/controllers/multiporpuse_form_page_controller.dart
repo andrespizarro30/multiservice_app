@@ -47,7 +47,7 @@ class MultiPorpuseFormPageController extends GetxController implements GetxServi
 
     _photoStringList = "";
     _jobPhotosList[serviceOrderNumber]!.forEach((file) {
-      _photoStringList = _photoStringList + file.path + "-";
+      _photoStringList = _photoStringList + file.path + ";";
     });
 
     multiporpuseJobDetail.FilesPath = _photoStringList;
@@ -75,7 +75,7 @@ class MultiPorpuseFormPageController extends GetxController implements GetxServi
 
     _photoStringList = "";
     _jobPhotosList[serviceOrderNumber]!.forEach((file) {
-      _photoStringList = _photoStringList + file.path + "-";
+      _photoStringList = _photoStringList + file.path + ";";
     });
 
     multiporpuseJobDetail.FilesPath = _photoStringList;
@@ -88,7 +88,7 @@ class MultiPorpuseFormPageController extends GetxController implements GetxServi
 
     _multiporpuseJobDetail = multiporpuseJobDetail;
 
-    multiporpuseJobDetail.FilesPath!.split("-").forEach((path) {
+    multiporpuseJobDetail.FilesPath!.split(";").forEach((path) {
       if(path.isNotEmpty){
         if(path.isNotEmpty){
           setJobPhotosNoUpdate(multiporpuseJobDetail.OrderNumber!, File(path));

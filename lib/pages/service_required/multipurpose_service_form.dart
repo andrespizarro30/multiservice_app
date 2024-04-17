@@ -19,7 +19,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path/path.dart' as path;
 import 'package:intl/intl.dart';
-import 'package:sqflite/sqflite.dart';
 
 import '../../base/image_viewer.dart';
 import '../../base/request_camera_gallery.dart';
@@ -111,12 +110,6 @@ class MultiporpuseServiceForm extends StatelessWidget {
                   multiporpuseJobDetail.JobDescription = jobDescriptionTEC.text :
                   multiporpuseJobDetail.JobDescription = multiporpuseJobDetail.JobDescription;
 
-                  if(controller.jobPhotosList.isNotEmpty){
-                    if(controller.jobPhotosList.containsKey(serviceOrderNumber)){
-                      controller.partialSaving(multiporpuseJobDetail);
-                    }
-                  }
-
                   return SliverList(
                       delegate: SliverChildListDelegate(
                           [
@@ -186,10 +179,14 @@ class MultiporpuseServiceForm extends StatelessWidget {
                             Container(
                               child: IconButton(
                                 onPressed: () async{
-                                  var permissionStatus = await requestStoragePermission();
+                                  var permissionStatus = Platform.isAndroid ? await requestStoragePermission() : await requestStoragePermissionIOS();
                                   if(permissionStatus.isGranted){
                                     pickImageFromCamera(Get.find<MultiPorpuseFormPageController>());
-                                  }else{
+                                  }else
+                                  if(Platform.isIOS){
+                                    pickImageFromCamera(Get.find<MultiPorpuseFormPageController>());
+                                  }
+                                  else{
                                     showCustomSnackBar("Acepte los permisos de cámara requeridos");
                                   }
                                 },
@@ -280,7 +277,7 @@ class MultiporpuseServiceForm extends StatelessWidget {
     String newPathName = path.join(dir,"${newFilename}.png");
     File imageFile = File(returnedImage.path).renameSync(newPathName);
 
-    var appDirectory = await getDownloadsDirectory();
+    var appDirectory = Platform.isAndroid ? await getDownloadsDirectory() : await getApplicationDocumentsDirectory();
 
     Directory folderDir = Directory("${appDirectory!.path}/${serviceType}/${selectedDate}/${serviceOrderNumber.toString()}");
 
@@ -291,6 +288,12 @@ class MultiporpuseServiceForm extends StatelessWidget {
     File newImageFile = await imageFile.copy("${folderDir.path}/${newFilename}");
 
     controller.setJobPhotos(serviceOrderNumber, newImageFile);
+
+    if(controller.jobPhotosList.isNotEmpty){
+      if(controller.jobPhotosList.containsKey(serviceOrderNumber)){
+        controller.partialSaving(multiporpuseJobDetail);
+      }
+    }
 
   }
 
