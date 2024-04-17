@@ -17,8 +17,8 @@ class MultiPorpuseFormPageController extends GetxController implements GetxServi
     required this.multiPorpusePageRepo
   });
 
-  Map<String,List<File>> _jobPhotosList = {};
-  Map<String,List<File>> get jobPhotosList => _jobPhotosList;
+  Map<String,List<String>> _jobPhotosList = {};
+  Map<String,List<String>> get jobPhotosList => _jobPhotosList;
 
   MultiporpuseJobDetail _multiporpuseJobDetail = MultiporpuseJobDetail();
   MultiporpuseJobDetail get multiporpuseJobDetail => _multiporpuseJobDetail;
@@ -30,16 +30,19 @@ class MultiPorpuseFormPageController extends GetxController implements GetxServi
 
   void setJobPhotos(String serviceOrderNumber,File image){
 
+    List<String> pathParts = image.path.split("/");
+    String filePath = "/${pathParts[pathParts!.length!-4]}/${pathParts[pathParts.length-3]}/${pathParts[pathParts.length-2]}/${pathParts[pathParts.length-1]}";
+
     if(!_jobPhotosList.containsKey(serviceOrderNumber)){
 
       _jobPhotosList.putIfAbsent(serviceOrderNumber, (){
-        List<File> fileList = [];
-        fileList.add(image);
+        List<String> fileList = [];
+        fileList.add(filePath);
         return fileList;
       });
     }else{
-      List<File> fileList = _jobPhotosList[serviceOrderNumber]!;
-      fileList.add(image);
+      List<String> fileList = _jobPhotosList[serviceOrderNumber]!;
+      fileList.add(filePath);
       _jobPhotosList.update(serviceOrderNumber, (value){
         return fileList;
       });
@@ -47,7 +50,7 @@ class MultiPorpuseFormPageController extends GetxController implements GetxServi
 
     _photoStringList = "";
     _jobPhotosList[serviceOrderNumber]!.forEach((file) {
-      _photoStringList = _photoStringList + file.path + ";";
+      _photoStringList = _photoStringList + file + ";";
     });
 
     multiporpuseJobDetail.FilesPath = _photoStringList;
@@ -58,16 +61,19 @@ class MultiPorpuseFormPageController extends GetxController implements GetxServi
 
   void setJobPhotosNoUpdate(String serviceOrderNumber,File image){
 
+    List<String> pathParts = image.path.split("/");
+    String filePath = "/${pathParts[pathParts!.length!-4]}/${pathParts[pathParts.length-3]}/${pathParts[pathParts.length-2]}/${pathParts[pathParts.length-1]}";
+
     if(!_jobPhotosList.containsKey(serviceOrderNumber)){
 
       _jobPhotosList.putIfAbsent(serviceOrderNumber, (){
-        List<File> fileList = [];
-        fileList.add(image);
+        List<String> fileList = [];
+        fileList.add(filePath);
         return fileList;
       });
     }else{
-      List<File> fileList = _jobPhotosList[serviceOrderNumber]!;
-      fileList.add(image);
+      List<String> fileList = _jobPhotosList[serviceOrderNumber]!;
+      fileList.add(filePath);
       _jobPhotosList.update(serviceOrderNumber, (value){
         return fileList;
       });
@@ -75,7 +81,7 @@ class MultiPorpuseFormPageController extends GetxController implements GetxServi
 
     _photoStringList = "";
     _jobPhotosList[serviceOrderNumber]!.forEach((file) {
-      _photoStringList = _photoStringList + file.path + ";";
+      _photoStringList = _photoStringList + file + ";";
     });
 
     multiporpuseJobDetail.FilesPath = _photoStringList;

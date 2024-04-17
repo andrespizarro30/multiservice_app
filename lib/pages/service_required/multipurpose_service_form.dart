@@ -57,10 +57,13 @@ class MultiporpuseServiceForm extends StatelessWidget {
       multiporpuseJobDetail.LoadedJob = "NO";
     }
 
-    SchedulerBinding.instance.addPostFrameCallback((_) {
+    late Directory? appCurrentDirectory;
+
+    SchedulerBinding.instance.addPostFrameCallback((_) async{
       serviceOrderNumber = multiporpuseJobDetail.OrderNumber!;
       jobDescriptionTEC.text = multiporpuseJobDetail.JobDescription!;
       Get.find<MultiPorpuseFormPageController>().assignToCurrentModel(multiporpuseJobDetail);
+      appCurrentDirectory = Platform.isAndroid ? await getDownloadsDirectory() : await getApplicationDocumentsDirectory();
     });
 
     return Scaffold(
@@ -158,13 +161,13 @@ class MultiporpuseServiceForm extends StatelessWidget {
                                   itemBuilder: (context, index){
                                     return GestureDetector(
                                       onTap: (){
-                                        Get.toNamed(RouteHelper.getImageViewer(controller.jobPhotosList[serviceOrderNumber]![index].path));
+                                        Get.toNamed(RouteHelper.getImageViewer("${appCurrentDirectory!.path}${controller.jobPhotosList[serviceOrderNumber]![index]}"));
                                       },
                                       child: Container(
                                         margin: EdgeInsets.only(left: Dimensions.width10/2,right: Dimensions.width10/2),
                                         width: Dimensions.screenWidth/3.5,
                                         height: Dimensions.screenHeight/3,
-                                        child: Image.file(controller.jobPhotosList[serviceOrderNumber]![index],
+                                        child: Image.file(File("${appCurrentDirectory!.path}${controller.jobPhotosList[serviceOrderNumber]![index]}"),
                                           fit: BoxFit.fill,
                                         ),
                                       ),
@@ -179,7 +182,7 @@ class MultiporpuseServiceForm extends StatelessWidget {
                             Container(
                               child: IconButton(
                                 onPressed: () async{
-                                  var permissionStatus = Platform.isAndroid ? await requestStoragePermission() : await requestStoragePermissionIOS();
+                                  var permissionStatus = Platform.isAndroid ? await requestStoragePermissionIOS() : await requestStoragePermissionIOS();
                                   if(permissionStatus.isGranted){
                                     pickImageFromCamera(Get.find<MultiPorpuseFormPageController>());
                                   }else

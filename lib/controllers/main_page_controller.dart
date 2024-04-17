@@ -42,7 +42,7 @@ class MainPageController extends GetxController implements GetxService{
 
     _isOpenAddressRequestContainer = !isOpenAddressRequestContainer;
 
-    _addressRequestContainerHeight = isOpenAddressRequestContainer ? Dimensions.screenHeight * 0.9 : 0;
+    _addressRequestContainerHeight = isOpenAddressRequestContainer ? Dimensions.screenHeight * 0.7 : 0;
 
     update();
 
