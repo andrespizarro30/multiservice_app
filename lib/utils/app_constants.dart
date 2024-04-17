@@ -29,4 +29,15 @@ class AppConstants{
 
   static const String CURRENTPAGE = "CurrentPage";
 
+  static const String CREATEMULTIPORPUSEJOBSDB = "CREATE TABLE MultiporpuseSavedJobs("
+      "OrderNumber TEXT PRIMARY KEY,"
+      "JobType TEXT,"
+      "JobAddress TEXT,"
+      "JobLocation TEXT,"
+      "JobDescription TEXT,"
+      "FilesPath TEXT,"
+      "FormType TEXT,"
+      "RequestedDate TEXT,"
+      "LoadedJob TEXT)";
+
 }

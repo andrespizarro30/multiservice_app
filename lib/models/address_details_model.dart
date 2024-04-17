@@ -1,15 +1,19 @@
+import 'package:geolocator/geolocator.dart';
+
 class AddressDetailModel{
 
   String? cityCountryAddress;
   String? formattedAddress;
   String? detailAddress;
   String? referenceAddress;
+  String? position;
 
   AddressDetailModel({
-    this.cityCountryAddress = "",
-    this.formattedAddress = "",
+    this.cityCountryAddress = "Ingrese su dirección",
+    this.formattedAddress = "Click aquí",
     this.detailAddress = "",
-    this.referenceAddress = ""
+    this.referenceAddress = "",
+    this.position = ""
   });
 
   AddressDetailModel.fromJson(Map<String, dynamic> json) {
@@ -17,6 +21,7 @@ class AddressDetailModel{
     formattedAddress = json['formattedAddress'];
     detailAddress = json['detailAddress'];
     referenceAddress = json['referenceAddress'];
+    position = json['position'];
   }
 
   Map<String, dynamic> toJson() {
@@ -25,6 +30,7 @@ class AddressDetailModel{
     data['formattedAddress'] = this.formattedAddress;
     data['detailAddress'] = this.detailAddress;
     data['referenceAddress'] = this.referenceAddress;
+    data['position'] = this.position;
     return data;
   }
 

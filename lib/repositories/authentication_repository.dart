@@ -22,8 +22,9 @@ class AuthenticationRepo{
 
     try{
       UserCredential userCredential = await firebaseAuth.createUserWithEmailAndPassword(email: signUpBody.email!, password: signUpBody.password!);
-      userCredential.user!.updateDisplayName(signUpBody.name);
-      userCredential.user!.updatePhotoURL(signUpBody.phone);
+      await userCredential.user!.updateDisplayName(signUpBody.name);
+      await userCredential.user!.updatePhotoURL(signUpBody.phone);
+      await firebaseAuth.signOut();
       return userCredential;
     }on FirebaseException catch(e){
       throw Exception(e.code);

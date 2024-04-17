@@ -52,6 +52,7 @@ class GoogleMapRepo{
       }
 
       placeAddress["formatted_address"] = geoCode.results![0].formattedAddress!;
+      placeAddress["position"] = "${geoCode.results![0].geometry!.location!.lat!.toString()},${geoCode.results![0].geometry!.location!.lng!.toString()}";
 
     }
 

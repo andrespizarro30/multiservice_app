@@ -9,6 +9,7 @@ import 'package:multiservice_app/push_notifications/push_notification_system.dar
 import 'package:multiservice_app/routes/routes_helper.dart';
 import 'package:multiservice_app/widgets/big_text.dart';
 import 'package:multiservice_app/widgets/small_text.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../models/advertising_info_model.dart';
 import '../../permissions/permissions.dart';
@@ -109,7 +110,7 @@ class MainMenuPage extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: (){
-
+                                Get.toNamed(RouteHelper.getMultiPorpuseForm(list.data![index].serviceType!));
                               },
                               child: Container(
                                 width:Dimensions.screenWidth/3.5,
@@ -137,31 +138,53 @@ class MainMenuPage extends StatelessWidget {
               ) :
               Container(
                 height: Dimensions.screenHeight/3,
-                child: GridView.builder(
-                    physics: AlwaysScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 4.0,
-                        mainAxisSpacing: 4.0
-                    ),
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 6,
-                    itemBuilder: (context, index){
-                      return Container(
-                        margin: EdgeInsets.only(left: Dimensions.width10/2,right: Dimensions.width10/2),
-                        width: Dimensions.screenWidth/3.5,
-                        height: Dimensions.screenHeight/3,
-                        child: Container(
-                            width:Dimensions.screenWidth/3.5,
-                            height: Dimensions.screenHeight/8,
-                            child: Center(
-                              child: CircularProgressIndicator(color: AppColors.mainColor,),
-                            )
+                child: Stack(
+                  children: [
+                    GridView.builder(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 4.0,
+                            mainAxisSpacing: 4.0
                         ),
-                      );
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 6,
+                        itemBuilder: (context, index){
+                          return Container(
+                            margin: EdgeInsets.only(left: Dimensions.width10/2,right: Dimensions.width10/2),
+                            width: Dimensions.screenWidth/3.5,
+                            height: Dimensions.screenHeight/3,
+                            child: Shimmer.fromColors(
+                              baseColor: Colors.grey.shade400,
+                              highlightColor: Colors.white,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width:Dimensions.screenWidth/3.5,
+                                    height: Dimensions.screenHeight/8,
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey.shade400
+                                    )
+                                  ),
+                                  SizedBox(
+                                    height: Dimensions.height10/2,
+                                  ),
+                                  Container(
+                                      width:Dimensions.screenWidth/3.5,
+                                      height: Dimensions.screenHeight/8/4,
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade400
+                                      )
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
 
-                    }
+                        }
+                    )
+                  ],
                 ),
               );
             }
@@ -191,7 +214,7 @@ class MainMenuPage extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: (){
-
+                          Get.toNamed(RouteHelper.getMultiPorpuseForm(controller.servicesTypeList![index].serviceType!));
                         },
                         child: Container(
                           width:Dimensions.screenWidth/3.5,
@@ -249,13 +272,23 @@ class MainMenuPage extends StatelessWidget {
                     }
                 ),
               ) :
-              Container(
-                  height: Dimensions.height20 * 10,
-                  width: Dimensions.screenWidth,
-                  child: Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.mainColor,)
-                  )
+              Padding(
+                padding: EdgeInsets.all(Dimensions.height20),
+                child: Container(
+                    height: Dimensions.height20 * 10,
+                    width: Dimensions.screenWidth,
+                    child: Shimmer.fromColors(
+                      baseColor: Colors.grey.shade400,
+                      highlightColor: Colors.white,
+                      child: Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade400
+                            ),
+                          )
+                      ),
+                    )
+                ),
               );
             }
         );
@@ -276,7 +309,7 @@ class MainMenuPage extends StatelessWidget {
                         _currPageValue)
                 );
               }
-          ),
+          )
         );
       }
 

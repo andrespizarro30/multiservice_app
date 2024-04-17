@@ -97,6 +97,7 @@ class SelectAddressPageController extends GetxController implements GetxService{
     }
 
     _placeAddress["formatted_address"] = _placesInfoModel.result!.formattedAddress!;
+    _placeAddress["position"] = "${_placesInfoModel.result!.geometry!.location!.lat!.toString()},${_placesInfoModel.result!.geometry!.location!.lng!.toString()}";
 
     _selectedPosition = LatLng(_placesInfoModel.result!.geometry!.location!.lat!, _placesInfoModel.result!.geometry!.location!.lng!);
 

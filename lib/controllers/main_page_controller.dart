@@ -88,6 +88,12 @@ class MainPageController extends GetxController implements GetxService{
 
   }
 
+  void getCurrentAddressInfo() async{
+
+    _currentAddressDetailModel = await mainPageRepo.getCurrentAddress();
+
+  }
+
   void updateIfReadyToDelete(int index,bool isReady){
 
     _isReadyToDelete = [];

@@ -30,6 +30,7 @@ class ConfirmAddressPage extends StatelessWidget {
       var formattedAddress = addressTextController.text.trim();
       var detailAddress = addressDetailTextController.text.trim();
       var referenceAddress = addressReferenceTextController.text.trim();
+      var position = controller.currentPosition;
 
       if(cityCountry.isEmpty){
         showCustomSnackBar("Ingresa tu ciudad",title: "Ciudad");
@@ -41,7 +42,8 @@ class ConfirmAddressPage extends StatelessWidget {
           cityCountryAddress: cityCountry,
           formattedAddress: formattedAddress,
           detailAddress: detailAddress,
-          referenceAddress: referenceAddress
+          referenceAddress: referenceAddress,
+          position: "${position.latitude},${position.longitude}"
         );
 
         controller.saveNewAddress(addressDetailModel).then((saveResult){

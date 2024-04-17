@@ -1,6 +1,9 @@
 
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../controllers/main_page_controller.dart';
 
 void requestGeolocationPermissions() async{
 
@@ -21,7 +24,7 @@ void requestGeolocationPermissions() async{
   if(permission == LocationPermission.whileInUse || permission == LocationPermission.always){
     var status = await Permission.locationAlways.request();
     if(status.isGranted){
-
+      Get.find<MainPageController>().setLocationUpdates();
     }else{
 
     }
@@ -54,4 +57,53 @@ void requestGeolocationPermissions() async{
     }
   }
 
+}
+
+Future<PermissionStatus> requestStoragePermission() async{
+
+  var permissionStatus =await Permission.photos.status;
+  var permissionStatusCamera;
+
+  if(permissionStatus.isGranted){
+    permissionStatusCamera = await requestCameraPermission();
+  }else
+  if(permissionStatus.isDenied){
+    await Permission.photos.request();
+
+    if(permissionStatus.isGranted){
+      permissionStatusCamera = await requestCameraPermission();
+    }
+  }else if(permissionStatus.isPermanentlyDenied){
+    await Permission.photos.request();
+
+    if(permissionStatus.isGranted){
+      permissionStatusCamera = await requestCameraPermission();
+    }
+  }
+
+  permissionStatus = await Permission.photos.status;
+
+  return permissionStatus;
+
+}
+
+Future<PermissionStatus> requestCameraPermission() async{
+
+  var permissionStatus =await Permission.camera.status;
+
+  if(permissionStatus.isDenied){
+    await Permission.camera.request();
+
+    if(permissionStatus.isGranted){
+
+    }
+  }else if(permissionStatus.isPermanentlyDenied){
+    await Permission.camera.request();
+
+    if(permissionStatus.isGranted){
+
+    }
+  }
+
+  return permissionStatus;
 }
