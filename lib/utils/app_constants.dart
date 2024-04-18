@@ -7,6 +7,7 @@ class AppConstants{
 
   static const String SERVICES_LIST_URI = "/api/services/get";
   static const String ADVERTISING_LIST_URI = "/api/advertising/get";
+  static const String REGISTER_NEW_JOB_URI = "/api/registerNewJob/post";
 
   static const String GOOGLEMAPSANDROIDKEY = "AIzaSyAkBBvSMGpO4EoLTNjkLr7V-HzvdRlTY14";
   static const String GOOGLEMAPSIOSKEY = "AIzaSyB3gCARPJjOJlVD-HWqHYxUpwC2T-ZnxYg";

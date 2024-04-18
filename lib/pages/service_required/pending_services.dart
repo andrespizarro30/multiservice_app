@@ -51,7 +51,7 @@ class PendingServices extends StatelessWidget {
 
                     return GestureDetector(
                       onTap: (){
-                        Get.to(() => MultiporpuseServiceForm(serviceType: controller!.pendingServicesList![index].JobType!,multiporpuseJobDetail: controller!.pendingServicesList![index],));
+                        Get.to(() => MultiporpuseServiceForm(serviceType: controller!.pendingServicesList![index].JobType!,multiporpuseJobDetail: controller!.pendingServicesList![index],),transition: Transition.rightToLeft,duration: Duration(milliseconds: 500));
                       },
                       child: Container(
                         margin: EdgeInsets.only(left: Dimensions.width10,right: Dimensions.width10),

@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:multiservice_app/apis/main_api_client.dart';
 import 'package:multiservice_app/controllers/authentication_controller.dart';
@@ -39,6 +40,9 @@ Future<void> init() async{
   final firebaseMessaging = FirebaseMessaging.instance;
   Get.lazyPut(()=> firebaseMessaging);
 
+  final firebaseStorage = FirebaseStorage.instance;
+  Get.lazyPut(()=> firebaseStorage);
+
   //api client
   Get.lazyPut(()=>MainApiClient(appBaseUrl: AppConstants.BASE_URL));
   Get.lazyPut(()=>GoogleMapsApiClient(appBaseUrl: AppConstants.GOOGLE_MAPS_API_BASE_URL));
@@ -49,7 +53,7 @@ Future<void> init() async{
   Get.lazyPut(()=>AuthenticationRepo(firebaseAuth: Get.find(), firebaseFirestore: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(()=>ChatRepo(firebaseAuth: Get.find(),firebaseFirestore: Get.find(), firebaseMessaging: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(()=>MainMenuPageRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
-  Get.lazyPut(()=>MultiPorpusePageRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.lazyPut(()=>MultiPorpusePageRepo(apiClient: Get.find(), sharedPreferences: Get.find(), firebaseStorage:  Get.find()));
 
   //controllers
   Get.lazyPut(()=>MainPageController(mainPageRepo: Get.find()));
@@ -57,6 +61,6 @@ Future<void> init() async{
   Get.lazyPut(()=>AuthenticationPageController(authRepo: Get.find()));
   Get.lazyPut(()=>ChatPageController(chatRepo: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(()=>MainMenuPageController(mainPageRepo: Get.find()));
-  Get.lazyPut(()=>MultiPorpuseFormPageController(multiPorpusePageRepo: Get.find()));
+  Get.lazyPut(()=>MultiPorpuseFormPageController(multiPorpusePageRepo: Get.find(),firebaseStorage: Get.find()));
 
 }

@@ -15,6 +15,7 @@ import 'package:multiservice_app/widgets/big_text.dart';
 import 'package:multiservice_app/widgets/icon_text_widget.dart';
 import 'package:multiservice_app/widgets/small_text.dart';
 import 'package:multiservice_app/widgets/text_field_right_icon.dart';
+import 'package:multiservice_app/widgets/text_field_right_icon_with_events.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path/path.dart' as path;
@@ -26,6 +27,7 @@ import '../../base/show_custom_message.dart';
 import '../../databases/multiporpuse_service_form_db.dart';
 import '../../permissions/permissions.dart';
 import '../../utils/dimension.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 class MultiporpuseServiceForm extends StatelessWidget {
@@ -68,52 +70,60 @@ class MultiporpuseServiceForm extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      body: Stack(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: Dimensions.height10/3,right: Dimensions.height10/3),
-            child: CustomScrollView(
-              slivers: <Widget>[
-                SliverAppBar(
-                  expandedHeight: Dimensions.height40 * 3.5,
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                            stops: [
-                              0.4,
-                              0.7
-                            ],
-                          colors: [Colors.white,AppColors.mainColor]
+      body: GetBuilder<MultiPorpuseFormPageController>(builder: (controller){
+
+        if(controller.isFinishUpload){
+          controller.setFinishedUpload = false;
+          if(controller.multiporpuseJobDetail.LoadedJob == "NO"){
+            Fluttertoast.showToast(
+                msg: "Problema de carga, intente nuevamente",
+                backgroundColor: Colors.black,
+                textColor: Colors.red,
+                toastLength: Toast.LENGTH_LONG);
+          }
+        }
+
+        return !controller.isNewJobDataLoading && controller.multiporpuseJobDetail.LoadedJob == "NO" ?
+        Stack(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: Dimensions.height10/3,right: Dimensions.height10/3),
+              child: CustomScrollView(
+                slivers: <Widget>[
+                  SliverAppBar(
+                    expandedHeight: Dimensions.height40 * 3.5,
+                    flexibleSpace: FlexibleSpaceBar(
+                        background: Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  stops: [
+                                    0.4,
+                                    0.7
+                                  ],
+                                  colors: [Colors.white,AppColors.mainColor]
+                              )
+                          ),
                         )
-                      ),
-                    )
+                    ),
+                    pinned: true,
+                    floating: true,
+                    snap: true,
+                    automaticallyImplyLeading: false,
+                    backgroundColor: AppColors.mainColor,
+                    bottom: PreferredSize(
+                        preferredSize: Size.fromHeight(Dimensions.height40 * 2),
+                        child: BigText(text: serviceType,color: Colors.white,size: Dimensions.font20 * 1.5,)
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(Dimensions.radius30),
+                            bottomRight: Radius.circular(Dimensions.radius30)
+                        )
+                    ),
                   ),
-                  pinned: true,
-                  floating: true,
-                  snap: true,
-                  automaticallyImplyLeading: false,
-                  backgroundColor: AppColors.mainColor,
-                  bottom: PreferredSize(
-                      preferredSize: Size.fromHeight(Dimensions.height40 * 2),
-                      child: BigText(text: serviceType,color: Colors.white,size: Dimensions.font20 * 1.5,)
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(Dimensions.radius30),
-                      bottomRight: Radius.circular(Dimensions.radius30)
-                    )
-                  ),
-                ),
-                GetBuilder<MultiPorpuseFormPageController>(builder: (controller){
-
-                  jobDescriptionTEC.text.isNotEmpty ?
-                  multiporpuseJobDetail.JobDescription = jobDescriptionTEC.text :
-                  multiporpuseJobDetail.JobDescription = multiporpuseJobDetail.JobDescription;
-
-                  return SliverList(
+                  SliverList(
                       delegate: SliverChildListDelegate(
                           [
                             SizedBox(height: Dimensions.height10,),
@@ -136,12 +146,13 @@ class MultiporpuseServiceForm extends StatelessWidget {
                             SizedBox(height: Dimensions.height10,),
                             BigText(text: "Descripción del trabajo"),
                             SizedBox(height: Dimensions.height10,),
-                            TextFieldRightIcon(
+                            TextFieldRightIconWithEvents(
                               textEditingController: jobDescriptionTEC,
                               textHint: "Registre claramente el servicio que solicita",
                               icon: Icons.close,
                               textInputType: TextInputType.text,
                               maxLines: 5,
+                              multiporpuseJobDetail: multiporpuseJobDetail,
                             ),
                             SizedBox(height: Dimensions.height10,),
                             BigText(text: "Agregue registro fotográfico del trabajo a realizar",linesNumber: 2,),
@@ -198,8 +209,8 @@ class MultiporpuseServiceForm extends StatelessWidget {
                             ),
                             SizedBox(height: Dimensions.height20,),
                             ElevatedButton(
-                                onPressed: (){
-
+                                onPressed: () async{
+                                  await controller.uploadJobImages(appCurrentDirectory!.path, multiporpuseJobDetail);
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -216,37 +227,74 @@ class MultiporpuseServiceForm extends StatelessWidget {
                             )
                           ]
                       )
-                  );
-                })
-              ],
+                  )
+                ],
+              ),
+            ),
+            Positioned(
+              top: Dimensions.height40 * 1.5,
+              left: Dimensions.width20,
+              right: Dimensions.width20,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                      onTap:(){
+                        Navigator.pop(context) ;
+                      },
+                      child: ApplIcon(icon: Icons.arrow_back_ios)
+                  ),
+                  SizedBox(width: Dimensions.width20,),
+                  GestureDetector(
+                      onTap:() async{
+                        await controller.uploadJobImages(appCurrentDirectory!.path, multiporpuseJobDetail);
+                      },
+                      child: ApplIcon(icon: Icons.cloud_upload_sharp)
+                  )
+                ],
+              ),
+            ),
+          ],
+        ):
+        !controller.isNewJobDataLoading && controller.multiporpuseJobDetail.LoadedJob == "OK" ?
+        Container(
+          color: Colors.white,
+          child: Center(
+            child: Container(
+              color: Colors.white,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset("assets/image/correct_upload.png",height: Dimensions.screenHeight / 2,width: Dimensions.screenWidth,),
+                  SizedBox(height: Dimensions.height20,),
+                  Text("Solicitud de personal enviada correctamente"),
+                  SizedBox(height: Dimensions.height20,),
+                  RawMaterialButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    elevation: 2.0,
+                    fillColor: Colors.white,
+                    child: Icon(
+                      Icons.close,
+                      size: 35.0,
+                    ),
+                    padding: EdgeInsets.all(15.0),
+                    shape: CircleBorder(),
+                  )
+                ],
+              ),
             ),
           ),
-          Positioned(
-            top: Dimensions.height40 * 1.5,
-            left: Dimensions.width20,
-            right: Dimensions.width20,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap:(){
-                    Navigator.pop(context) ;
-                  },
-                  child: ApplIcon(icon: Icons.arrow_back_ios)
-                ),
-                SizedBox(width: Dimensions.width20,),
-                GestureDetector(
-                  onTap:(){
-
-                  },
-                  child: ApplIcon(icon: Icons.cloud_upload_sharp)
-                )
-              ],
-            ),
+        ):
+        Container(
+          color: Colors.white,
+          child: Center(
+            child: Image.asset("assets/image/uploading_files.gif",height: Dimensions.screenHeight / 2,width: Dimensions.screenWidth,)
           ),
-        ],
-      )
+        );
+      })
     );
   }
 
@@ -276,8 +324,8 @@ class MultiporpuseServiceForm extends StatelessWidget {
     String timeStamp = DateTime.now().year.toString()+DateTime.now().month.toString()+DateTime.now().day.toString()+DateTime.now().hour.toString()+DateTime.now().minute.toString()+DateTime.now().second.toString();
 
     String dir = path.dirname(returnedImage.path);
-    String newFilename = "${serviceType}_${selectedDate}_${serviceOrderNumber}_${timeStamp}.png";
-    String newPathName = path.join(dir,"${newFilename}.png");
+    String newFilename = "${serviceType}_${selectedDate}_${serviceOrderNumber}_${timeStamp}.jpg";
+    String newPathName = path.join(dir,"${newFilename}");
     File imageFile = File(returnedImage.path).renameSync(newPathName);
 
     var appDirectory = Platform.isAndroid ? await getDownloadsDirectory() : await getApplicationDocumentsDirectory();

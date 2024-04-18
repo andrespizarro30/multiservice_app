@@ -19,7 +19,7 @@ class MultiporpuseJobDetail{
     this.FilesPath = "",
     this.FormType = "",
     this.LoadedJob = "",
-    this.RequestedDate
+    this.RequestedDate = ""
   });
 
   MultiporpuseJobDetail.fromJson(Map<String, dynamic> json) {
