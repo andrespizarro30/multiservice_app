@@ -110,7 +110,7 @@ class MainMenuPage extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: (){
-                                Get.toNamed(RouteHelper.getMultiPorpuseForm(list.data![index].serviceType!));
+                                Get.toNamed(RouteHelper.getMultiPorpuseForm(list.data![index].serviceType!,list.data![index].tokenTopic!));
                               },
                               child: Container(
                                 width:Dimensions.screenWidth/3.5,
@@ -214,7 +214,7 @@ class MainMenuPage extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: (){
-                          Get.toNamed(RouteHelper.getMultiPorpuseForm(controller.servicesTypeList![index].serviceType!));
+                          Get.toNamed(RouteHelper.getMultiPorpuseForm(controller.servicesTypeList![index].serviceType!,controller.servicesTypeList![index].tokenTopic!));
                         },
                         child: Container(
                           width:Dimensions.screenWidth/3.5,

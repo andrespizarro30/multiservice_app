@@ -34,7 +34,7 @@ class RouteHelper{
   static String getSignUp()=>'$signUpPage';
   static String getChatList()=>'$chatListPage';
   static String getChatConversation(String receiverUserEmail, String receiverUserID, String token)=>'$chatConversationPage?receiverUserEmail=$receiverUserEmail&receiverUserID=$receiverUserID&token=$token';
-  static String getMultiPorpuseForm(String serviceType)=>'$multiporpuseServiceFormPage?serviceType=$serviceType';
+  static String getMultiPorpuseForm(String serviceType, String tokenTopic)=>'$multiporpuseServiceFormPage?serviceType=$serviceType&tokenTopic=$tokenTopic';
   static String getImageViewer(String imagePath)=>'$imageViewer?imagePath=$imagePath';
   //static String getPopularFood(int pageId,String page)=>'$popularFood?pageId=$pageId&page=$page';
   //static String getRecommendedFood(int pageId,String page)=>'$recommendedFood?pageId=$pageId&page=$page';
@@ -60,7 +60,8 @@ class RouteHelper{
         name: multiporpuseServiceFormPage,
         page: (){
           var serviceType = Get.parameters['serviceType'];
-          return MultiporpuseServiceForm(serviceType: serviceType!, multiporpuseJobDetail: MultiporpuseJobDetail(),);
+          var tokenTopic = Get.parameters['tokenTopic'];
+          return MultiporpuseServiceForm(serviceType: serviceType!, tokenTopic: tokenTopic!, multiporpuseJobDetail: MultiporpuseJobDetail(),);
         }
     ),
     GetPage(

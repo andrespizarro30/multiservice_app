@@ -8,6 +8,7 @@ import 'package:sqflite/sqflite.dart';
 
 import '../databases/multiporpuse_service_form_db.dart';
 import '../models/multiporpuse_job_detail_model.dart';
+import '../models/requested_jobs_detail_model.dart';
 import '../models/response_new_job_register.dart';
 import '../repositories/multiporpuse_form_repository.dart';
 
@@ -29,6 +30,9 @@ class MultiPorpuseFormPageController extends GetxController implements GetxServi
 
   List<MultiporpuseJobDetail> _pendingServicesList = [];
   List<MultiporpuseJobDetail> get pendingServicesList => _pendingServicesList;
+
+  List<RequestedJob> _sentServicesList = [];
+  List<RequestedJob> get sentServicesList => _sentServicesList;
 
   ResponseNewJobRegisterModel _responseModel = ResponseNewJobRegisterModel(RegisteredJob: "NO");
   ResponseNewJobRegisterModel get responseModel => _responseModel;
@@ -167,7 +171,11 @@ class MultiPorpuseFormPageController extends GetxController implements GetxServi
     if(response.statusCode==200){
       String registeredJob = response.body["RegisteredJob"];
       _responseModel = ResponseNewJobRegisterModel(RegisteredJob: registeredJob);
-      multiporpuseJobDetail.LoadedJob = "OK";
+      multiporpuseJobDetail.LoadedJob = registeredJob;
+      if(registeredJob=="OK"){
+        await multiPorpusePageRepo.sendNotificationToTech(multiporpuseJobDetail);
+        await getMyRegisteredJobs();
+      }
     }else{
       _responseModel = ResponseNewJobRegisterModel(RegisteredJob: "NO");
     }
@@ -225,6 +233,34 @@ class MultiPorpuseFormPageController extends GetxController implements GetxServi
         }
       }
     });
+
+  }
+
+  Future<void> getMyRegisteredJobs()async{
+
+    _sentServicesList=[];
+
+    Response response = await multiPorpusePageRepo.getMyRegisteredJobs();
+    if(response.statusCode == 200){
+      _sentServicesList.addAll(RequestedJobList.fromJson(response.body).requestedJobList);
+    }else{
+
+    }
+
+  }
+
+  Future<void> getMyRegisteredJobsRefresh()async{
+
+    _sentServicesList=[];
+
+    Response response = await multiPorpusePageRepo.getMyRegisteredJobs();
+    if(response.statusCode == 200){
+      _sentServicesList.addAll(RequestedJobList.fromJson(response.body).requestedJobList);
+    }else{
+
+    }
+
+    update();
 
   }
 

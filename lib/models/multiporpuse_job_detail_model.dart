@@ -9,6 +9,9 @@ class MultiporpuseJobDetail{
   String? FormType;
   String? LoadedJob;
   String? RequestedDate;
+  String? JobUID;
+  String? JobToken;
+  String? TokenTopic;
 
   MultiporpuseJobDetail({
     this.OrderNumber = "",
@@ -19,7 +22,10 @@ class MultiporpuseJobDetail{
     this.FilesPath = "",
     this.FormType = "",
     this.LoadedJob = "",
-    this.RequestedDate = ""
+    this.RequestedDate = "",
+    this.JobUID = "",
+    this.JobToken = "",
+    this.TokenTopic = ""
   });
 
   MultiporpuseJobDetail.fromJson(Map<String, dynamic> json) {
@@ -32,6 +38,9 @@ class MultiporpuseJobDetail{
     FormType = json['FormType'];
     LoadedJob = json['LoadedJob'];
     RequestedDate = json['RequestedDate'];
+    JobUID = json['JobUID'];
+    JobToken = json['JobToken'];
+    TokenTopic = json['TokenTopic'];
   }
 
   Map<String,dynamic> toJson(){
@@ -45,6 +54,9 @@ class MultiporpuseJobDetail{
     data["FormType"] = this.FormType;
     data['LoadedJob'] = this.LoadedJob;
     data['RequestedDate'] = this.RequestedDate;
+    data['JobUID'] = this.JobUID;
+    data['JobToken'] = this.JobToken;
+    data['TokenTopic'] = this.TokenTopic;
     return data;
   }
 

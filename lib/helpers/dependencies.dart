@@ -50,15 +50,15 @@ Future<void> init() async{
   //repos
   Get.lazyPut(()=>MainPageRepo(sharedPreferences: Get.find()));
   Get.lazyPut(()=>GoogleMapRepo(googleMapsApiClient: Get.find(), sharedPreferences: Get.find()));
-  Get.lazyPut(()=>AuthenticationRepo(firebaseAuth: Get.find(), firebaseFirestore: Get.find(), sharedPreferences: Get.find()));
+  Get.lazyPut(()=>AuthenticationRepo(firebaseAuth: Get.find(), firebaseFirestore: Get.find(),firebaseStorage:  Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(()=>ChatRepo(firebaseAuth: Get.find(),firebaseFirestore: Get.find(), firebaseMessaging: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(()=>MainMenuPageRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
-  Get.lazyPut(()=>MultiPorpusePageRepo(apiClient: Get.find(), sharedPreferences: Get.find(), firebaseStorage:  Get.find()));
+  Get.lazyPut(()=>MultiPorpusePageRepo(apiClient: Get.find(), sharedPreferences: Get.find(), firebaseStorage:  Get.find(),firebaseMessaging: Get.find(), firebaseAuth: Get.find()));
 
   //controllers
   Get.lazyPut(()=>MainPageController(mainPageRepo: Get.find()));
   Get.lazyPut(()=>SelectAddressPageController(googleMapRepo: Get.find()));
-  Get.lazyPut(()=>AuthenticationPageController(authRepo: Get.find()));
+  Get.lazyPut(()=>AuthenticationPageController(authRepo: Get.find(),firebaseAuth: Get.find(),firebaseStorage: Get.find()));
   Get.lazyPut(()=>ChatPageController(chatRepo: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(()=>MainMenuPageController(mainPageRepo: Get.find()));
   Get.lazyPut(()=>MultiPorpuseFormPageController(multiPorpusePageRepo: Get.find(),firebaseStorage: Get.find()));

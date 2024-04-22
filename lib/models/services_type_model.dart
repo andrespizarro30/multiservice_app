@@ -30,13 +30,15 @@ class ServicesList {
   int? id;
   String? serviceType;
   String? descriptingIcon;
+  String? tokenTopic;
 
-  ServicesList({this.id, this.serviceType, this.descriptingIcon});
+  ServicesList({this.id, this.serviceType, this.descriptingIcon, this.tokenTopic});
 
   ServicesList.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     serviceType = json['ServiceType'];
     descriptingIcon = json['Descripting_Icon'];
+    tokenTopic = json['TokenTopic'];
   }
 
   Map<String, dynamic> toJson() {
@@ -44,6 +46,7 @@ class ServicesList {
     data['id'] = this.id;
     data['ServiceType'] = this.serviceType;
     data['Descripting_Icon'] = this.descriptingIcon;
+    data['TokenTopic'] = this.tokenTopic;
     return data;
   }
 }

@@ -39,6 +39,17 @@ class MainApiClient extends GetConnect implements GetxService{
 
   }
 
+  Future<Response> getDataWithQuery(String uri, dynamic query) async{
+
+    try{
+      Response response = await get(uri,query: query);
+      return response;
+    }catch(e){
+      return Response(statusCode: 1, statusText: e.toString());
+    }
+
+  }
+
   Future<Response> postData(String uri, dynamic body) async{
     try{
       Response response = await post(uri, body, headers: mainHeaders);

@@ -1,6 +1,9 @@
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:multiservice_app/utils/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,11 +13,13 @@ class AuthenticationRepo{
 
   FirebaseAuth firebaseAuth;
   FirebaseFirestore firebaseFirestore;
+  FirebaseStorage firebaseStorage;
   SharedPreferences sharedPreferences;
 
   AuthenticationRepo({
     required this.firebaseAuth,
     required this.firebaseFirestore,
+    required this.firebaseStorage,
     required this.sharedPreferences
   });
 
@@ -22,8 +27,7 @@ class AuthenticationRepo{
 
     try{
       UserCredential userCredential = await firebaseAuth.createUserWithEmailAndPassword(email: signUpBody.email!, password: signUpBody.password!);
-      await userCredential.user!.updateDisplayName(signUpBody.name);
-      await userCredential.user!.updatePhotoURL(signUpBody.phone);
+      await userCredential.user!.updateDisplayName("${signUpBody.name};${signUpBody.phone}");
       await firebaseAuth.signOut();
       return userCredential;
     }on FirebaseException catch(e){
@@ -52,6 +56,12 @@ class AuthenticationRepo{
     }on FirebaseException catch(e){
       throw Exception(e.code);
     }
+
+  }
+
+  Future<FirebaseAuth> getProfileData() async{
+
+    return firebaseAuth;
 
   }
 

@@ -6,10 +6,10 @@ class SignUpBody{
   String? password;
 
   SignUpBody({
-    required this.name,
-    required this.phone,
-    required this.email,
-    required this.password,
+    this.name = "",
+    this.phone = "",
+    this.email = "",
+    this.password = "",
   });
 
   SignUpBody.fromJson(Map<String, dynamic> json) {

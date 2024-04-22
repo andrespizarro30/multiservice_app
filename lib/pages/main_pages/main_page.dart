@@ -8,6 +8,7 @@ import 'package:multiservice_app/controllers/authentication_controller.dart';
 import 'package:multiservice_app/controllers/main_page_controller.dart';
 import 'package:multiservice_app/controllers/multiporpuse_form_page_controller.dart';
 import 'package:multiservice_app/controllers/select_address_page_controller.dart';
+import 'package:multiservice_app/pages/authentication/account_page.dart';
 import 'package:multiservice_app/pages/authentication/sign_in_page.dart';
 import 'package:multiservice_app/pages/main_pages/main_menu_all_options.dart';
 import 'package:multiservice_app/pages/main_pages/main_menu_page.dart';
@@ -43,7 +44,8 @@ class _MainPageState extends State<MainPage> {
   List<Widget> _pages=[
     MainMenuAllOptions(),
     PendingServices(),
-    AcceptedServices()
+    AcceptedServices(),
+    AccountPage()
   ];
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
@@ -67,7 +69,7 @@ class _MainPageState extends State<MainPage> {
                     icon: Icons.circle,
                     size: 16,
                     iconColor: Colors.transparent,
-                    backgroundColor: Colors.red,
+                    backgroundColor: Colors.green,
                   )
               ) :
               Container(),
@@ -90,8 +92,43 @@ class _MainPageState extends State<MainPage> {
         inactiveColorPrimary: Colors.redAccent,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.check_mark_circled_solid),
-        title: ("Aceptados"),
+        icon: GetBuilder<MultiPorpuseFormPageController>(builder: (controller){
+          return Stack(
+            children: [
+              Icon(Icons.rocket_launch),
+              controller.sentServicesList.isNotEmpty ?
+              Positioned(
+                  right: 0,
+                  top: 0,
+                  child: ApplIcon(
+                    icon: Icons.circle,
+                    size: 16,
+                    iconColor: Colors.transparent,
+                    backgroundColor: Colors.green,
+                  )
+              ) :
+              Container(),
+              controller.sentServicesList.isNotEmpty ?
+              Positioned(
+                right: 3,
+                top: 3,
+                child: SmallText(
+                  text: Get.find<MultiPorpuseFormPageController>().sentServicesList.length.toString(),
+                  color: Colors.white,
+                  size: 8,
+                ),
+              ) :
+              Container()
+            ],
+          );
+        }),
+        title: ("Enviados"),
+        activeColorPrimary: AppColors.mainColor,
+        inactiveColorPrimary: Colors.redAccent,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(CupertinoIcons.profile_circled),
+        title: ("Perfil"),
         activeColorPrimary: AppColors.mainColor,
         inactiveColorPrimary: Colors.redAccent,
       )
@@ -114,6 +151,8 @@ class _MainPageState extends State<MainPage> {
     Get.find<AuthenticationPageController>().verifyCurrentUser();
     Get.find<MainPageController>().getCurrentAddress();
     Get.find<MultiPorpuseFormPageController>().getPendingServices();
+    Get.find<MultiPorpuseFormPageController>().getMyRegisteredJobsRefresh();
+    Get.find<AuthenticationPageController>().getProfileData();
 
     initNotificationService();
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:multiservice_app/utils/colors.dart';
+import 'package:multiservice_app/utils/dimension.dart';
 
 class RequestCameraOrGallery extends StatefulWidget {
   const RequestCameraOrGallery({super.key});
@@ -19,12 +21,13 @@ class _RequestCameraOrGalleryState extends State<RequestCameraOrGallery> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14)
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.mainColor,
       child: Container(
-        margin: const EdgeInsets.all(6),
-        width: double.infinity,
+        margin: const EdgeInsets.all(3),
+        height: Dimensions.screenHeight/3,
+        width: Dimensions.screenWidth,
         decoration: BoxDecoration(
-          color: Colors.black87,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(6),
         ),
         child: Column(
@@ -35,19 +38,17 @@ class _RequestCameraOrGalleryState extends State<RequestCameraOrGallery> {
               "Seleccionar Fuente de Imágenes",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 16
               ),
             ),
             const SizedBox(height: 20,),
             Divider(
-              thickness: 4,
-              color: Colors.grey,
+              thickness: 3,
+              color: AppColors.mainColor,
             ),
             const SizedBox(height: 16,),
-
             Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Radio(
@@ -62,7 +63,7 @@ class _RequestCameraOrGalleryState extends State<RequestCameraOrGallery> {
                   "Cámara",
                   style: TextStyle(
                       fontSize: 15,
-                      color: Colors.white
+                      color: Colors.black
                   ),
                 ),
                 Radio(
@@ -77,7 +78,7 @@ class _RequestCameraOrGalleryState extends State<RequestCameraOrGallery> {
                   "Galería",
                   style: TextStyle(
                       fontSize: 15,
-                      color: Colors.white
+                      color: Colors.black
                   ),
                 ),
               ],
@@ -95,7 +96,7 @@ class _RequestCameraOrGalleryState extends State<RequestCameraOrGallery> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Aceptar",
+                      "Selecionar",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -105,12 +106,12 @@ class _RequestCameraOrGalleryState extends State<RequestCameraOrGallery> {
                     Icon(
                       Icons.photo,
                       color: Colors.white,
-                      size: 28,
+                      size: 26,
                     )
                   ],
                 ),
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.green
+                    primary: AppColors.mainColor
                 ),
               ),
             ),

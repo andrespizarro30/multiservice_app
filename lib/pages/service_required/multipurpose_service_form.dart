@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
@@ -33,12 +34,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 class MultiporpuseServiceForm extends StatelessWidget {
 
   String serviceType;
+  String tokenTopic;
   MultiporpuseJobDetail multiporpuseJobDetail;
   String serviceOrderNumber = "";
 
   MultiporpuseServiceForm({
     super.key,
     required this.serviceType,
+    required this.tokenTopic,
     required this.multiporpuseJobDetail
   });
 
@@ -57,6 +60,7 @@ class MultiporpuseServiceForm extends StatelessWidget {
       multiporpuseJobDetail.JobLocation = Get.find<MainPageController>().currentAddressDetailModel!.position!;
       multiporpuseJobDetail.FormType = "MultiporpuseServiceForm";
       multiporpuseJobDetail.LoadedJob = "NO";
+      multiporpuseJobDetail.TokenTopic = tokenTopic;
     }
 
     late Directory? appCurrentDirectory;
