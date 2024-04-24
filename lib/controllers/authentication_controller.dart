@@ -36,6 +36,12 @@ class AuthenticationPageController extends GetxController implements GetxService
   String _profileImageURL = "";
   String get profileImageURL => _profileImageURL;
 
+  int _tapsCount = 0;
+  int get tapsCount => _tapsCount;
+
+  bool _isTechnician = false;
+  bool get isTechnician => _isTechnician;
+
   Future<void> registration(SignUpBody signUpBody) async{
     _isLoading = true;
     update();
@@ -63,7 +69,7 @@ class AuthenticationPageController extends GetxController implements GetxService
         _uid = userCredential.user!.uid!;
       }
       _isLoading = false;
-      update();
+      getProfileData();
     }catch(e){
       showCustomSnackBar("Usuario y/o contrasena erroneos, intente nuevamente...",title: "Login usuario");
       _uid = "";
@@ -81,9 +87,10 @@ class AuthenticationPageController extends GetxController implements GetxService
 
     _signUpBody.name = dataList[0];
     _signUpBody.phone = dataList[1];
+    _signUpBody.userType = dataList[2];
     _signUpBody.email = firebaseAuth.currentUser!.email;
 
-    _profileImageURL = firebaseAuth.currentUser!.photoURL!;
+    _profileImageURL = firebaseAuth.currentUser!.photoURL != null ? firebaseAuth.currentUser!.photoURL! : "";
 
     update();
 
@@ -96,6 +103,7 @@ class AuthenticationPageController extends GetxController implements GetxService
     String fileName = pathParts[pathParts.length-1];
 
     final Reference refStorage = firebaseStorage.ref().child("MyPhotoProfile")
+        .child(firebaseAuth.currentUser!.uid!)    
         .child(fileName);
 
 
@@ -119,6 +127,16 @@ class AuthenticationPageController extends GetxController implements GetxService
 
   void signOut() async{
     await authRepo.signOut();
+  }
+
+  void addTapCount(){
+    _tapsCount = _tapsCount + 1;
+    update();
+  }
+
+  void setIfTechnician(){
+    _isTechnician = !_isTechnician;
+    update();
   }
 
 }

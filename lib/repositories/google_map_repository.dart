@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../apis/google_maps_api_client.dart';
+import '../apis/main_api_client.dart';
 import '../models/address_details_model.dart';
 import '../models/geo_code_model.dart';
 import '../models/place_info_model.dart';
@@ -15,10 +17,12 @@ class GoogleMapRepo{
 
   final GoogleMapsApiClient googleMapsApiClient;
   final SharedPreferences sharedPreferences;
+  final MainApiClient apiClient;
 
   GoogleMapRepo({
     required this.googleMapsApiClient,
-    required this.sharedPreferences
+    required this.sharedPreferences,
+    required this.apiClient
   });
 
   Position? _currentLocation;
@@ -116,5 +120,16 @@ class GoogleMapRepo{
     return placeDetails;
   }
 
+  Future<Response> getCitiesPolygons() async {
+
+    return await apiClient.getData(AppConstants.CITIES_POLYGONS_LIST_URI);
+
+  }
+
+  Future<Response> getAllRegisteredJobs()async{
+
+    return await apiClient.getData(AppConstants.ALL_REGISTERED_JOBS_URI);
+
+  }
 
 }

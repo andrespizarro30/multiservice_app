@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../controllers/authentication_controller.dart';
-import '../../controllers/main_page_controller.dart';
-import '../../controllers/select_address_page_controller.dart';
-import '../../routes/routes_helper.dart';
-import '../../utils/colors.dart';
-import '../../utils/dimension.dart';
-import '../../widgets/app_icon.dart';
-import '../../widgets/big_text.dart';
-import '../../widgets/icon_text_widget.dart';
-import '../../widgets/small_text.dart';
+import '../../../controllers/authentication_controller.dart';
+import '../../../controllers/main_page_controller.dart';
+import '../../../controllers/select_address_page_controller.dart';
+import '../../../routes/routes_helper.dart';
+import '../../../utils/colors.dart';
+import '../../../utils/dimension.dart';
+import '../../../widgets/app_icon.dart';
+import '../../../widgets/big_text.dart';
+import '../../../widgets/icon_text_widget.dart';
+import '../../../widgets/small_text.dart';
 import 'main_menu_page.dart';
 
 class MainMenuAllOptions extends StatelessWidget {

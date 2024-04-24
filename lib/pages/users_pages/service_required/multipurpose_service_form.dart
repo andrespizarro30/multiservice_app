@@ -22,13 +22,12 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:path/path.dart' as path;
 import 'package:intl/intl.dart';
 
-import '../../base/image_viewer.dart';
-import '../../base/request_camera_gallery.dart';
-import '../../base/show_custom_message.dart';
-import '../../databases/multiporpuse_service_form_db.dart';
-import '../../permissions/permissions.dart';
-import '../../utils/dimension.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+import '../../../base/request_camera_gallery.dart';
+import '../../../base/show_custom_message.dart';
+import '../../../permissions/permissions.dart';
+import '../../../utils/dimension.dart';
 
 
 class MultiporpuseServiceForm extends StatelessWidget {

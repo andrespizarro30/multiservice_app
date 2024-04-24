@@ -6,14 +6,14 @@ import 'package:multiservice_app/base/image_viewer.dart';
 import 'package:multiservice_app/pages/authentication/sign_up_page.dart';
 import 'package:multiservice_app/pages/chat/chat_conversation_page.dart';
 import 'package:multiservice_app/pages/chat/chat_list_page.dart';
-import 'package:multiservice_app/pages/main_pages/main_menu_page.dart';
-import 'package:multiservice_app/pages/main_pages/main_page.dart';
 import 'package:multiservice_app/pages/select_address/confirm_address_page.dart';
 import 'package:multiservice_app/pages/select_address/search_address_page.dart';
 import 'package:multiservice_app/pages/select_address/select_address_page.dart';
-import 'package:multiservice_app/pages/service_required/multipurpose_service_form.dart';
+import 'package:multiservice_app/pages/technicians_pages/main_pages/main_menu_all_option_technician.dart';
 
 import '../models/multiporpuse_job_detail_model.dart';
+import '../pages/users_pages/main_pages/main_page.dart';
+import '../pages/users_pages/service_required/multipurpose_service_form.dart';
 
 class RouteHelper{
 
@@ -27,6 +27,8 @@ class RouteHelper{
   static const String multiporpuseServiceFormPage = "/multiporpuseServiceForm";
   static const String imageViewer = "/imageViewer";
 
+  static const String mainMenuAllOptionsTechnicians = "/mainMenuAllOptionsTechnicians";
+
   static String getMain()=>'$mainMenu';
   static String getSelectAddress()=>'$selectAddressPage';
   static String getConfirmAddress()=>'$confirmAddressPage';
@@ -36,9 +38,10 @@ class RouteHelper{
   static String getChatConversation(String receiverUserEmail, String receiverUserID, String token)=>'$chatConversationPage?receiverUserEmail=$receiverUserEmail&receiverUserID=$receiverUserID&token=$token';
   static String getMultiPorpuseForm(String serviceType, String tokenTopic)=>'$multiporpuseServiceFormPage?serviceType=$serviceType&tokenTopic=$tokenTopic';
   static String getImageViewer(String imagePath)=>'$imageViewer?imagePath=$imagePath';
-  //static String getPopularFood(int pageId,String page)=>'$popularFood?pageId=$pageId&page=$page';
-  //static String getRecommendedFood(int pageId,String page)=>'$recommendedFood?pageId=$pageId&page=$page';
-  //static String getDrinks(int pageId,String page)=>'$drinks?pageId=$pageId&page=$page';
+
+  static String getMainMenuAllOptionsTechnicians()=>'$mainMenuAllOptionsTechnicians';
+
+
 
   static List<GetPage> routes =[
     GetPage(name: mainMenu, page: ()=>MainPage()),
@@ -71,5 +74,6 @@ class RouteHelper{
           return ImageViewer(imagePath: imagePath!);
         }
     ),
+    GetPage(name: mainMenuAllOptionsTechnicians, page: ()=>MainMenuAllOptionsTechnicians()),
   ];
 }

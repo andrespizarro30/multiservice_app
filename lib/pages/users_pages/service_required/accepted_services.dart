@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multiservice_app/base/no_data_page.dart';
-import 'package:multiservice_app/pages/service_required/multipurpose_service_form.dart';
 import 'package:multiservice_app/utils/colors.dart';
 
-import '../../controllers/multiporpuse_form_page_controller.dart';
-import '../../utils/dimension.dart';
-import '../../widgets/app_icon.dart';
+import '../../../controllers/multiporpuse_form_page_controller.dart';
+import '../../../utils/dimension.dart';
+import '../../../widgets/app_icon.dart';
+
 
 class AcceptedServices extends StatelessWidget {
   const AcceptedServices({super.key});

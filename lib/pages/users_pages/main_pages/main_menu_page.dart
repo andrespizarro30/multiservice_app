@@ -11,10 +11,9 @@ import 'package:multiservice_app/widgets/big_text.dart';
 import 'package:multiservice_app/widgets/small_text.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../models/advertising_info_model.dart';
-import '../../permissions/permissions.dart';
-import '../../utils/colors.dart';
-import '../../utils/dimension.dart';
+import '../../../models/advertising_info_model.dart';
+import '../../../permissions/permissions.dart';
+import '../../../utils/dimension.dart';
 
 
 class MainMenuPage extends StatelessWidget {

@@ -22,6 +22,7 @@ class SignUpPage extends StatelessWidget {
     TextEditingController passwordTextEditController = TextEditingController();
     TextEditingController nameTextEditController = TextEditingController();
     TextEditingController phoneTextEditController = TextEditingController();
+    bool isTechnician = false;
 
     var signUpImages = [
       "x.png",
@@ -35,6 +36,7 @@ class SignUpPage extends StatelessWidget {
       var pwd = passwordTextEditController.text.trim();
       var name = nameTextEditController.text.trim();
       var phone = phoneTextEditController.text.trim();
+      var userType = isTechnician ? "Tecnico" : "Usuario";
 
       if(name.isEmpty){
         showCustomSnackBar("Type in your name",title: "Name");
@@ -50,7 +52,7 @@ class SignUpPage extends StatelessWidget {
         showCustomSnackBar("Password must have at least 6 characters",title: "Password");
       }else{
 
-        SignUpBody signUpBody = SignUpBody(name: name, phone: phone, email: email, password: pwd);
+        SignUpBody signUpBody = SignUpBody(name: name, phone: phone, email: email, password: pwd, userType: userType);
 
         authController.registration(signUpBody);
 
@@ -67,12 +69,17 @@ class SignUpPage extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: Dimensions.screenHeight * 0.05,),
-              Container(
-                child: Center(
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: Dimensions.radius20 * 4,
-                    backgroundImage: AssetImage("assets/image/logo.jpg"),
+              GestureDetector(
+                onTap: (){
+                  controller.addTapCount();
+                },
+                child: Container(
+                  child: Center(
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: Dimensions.radius20 * 4,
+                      backgroundImage: AssetImage("assets/image/logo.jpg"),
+                    ),
                   ),
                 ),
               ),
@@ -106,6 +113,23 @@ class SignUpPage extends StatelessWidget {
                 textInputType: TextInputType.name,
               ),
               SizedBox(height: Dimensions.height20 * 2,),
+              Center(
+                child: Visibility(
+                  visible: controller.tapsCount>10 ? true : false,
+                  child: Row(
+                    children: [
+                      Checkbox(
+                          value: controller.isTechnician,
+                          onChanged: (bool? select){
+                            isTechnician = select!;
+                            controller.setIfTechnician();
+                          }
+                      ),
+                      BigText(text: "Es técnico?")
+                    ],
+                  )
+                ),
+              ),
               GestureDetector(
                 onTap: (){
                   _registration(controller);
