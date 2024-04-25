@@ -25,15 +25,10 @@ class MainMenuAllOptions extends StatelessWidget {
         return Stack(
           children: [
             mainPageController.isOpenAddressRequestContainer ?
-            GestureDetector(
-              onTap: (){
-                mainPageController.openAdressRequestContainer();
-              },
-              child: Container(
-                height: Dimensions.screenHeight,
-                width: double.infinity,
-                color: Colors.black45,
-              ),
+            Container(
+              height: Dimensions.screenHeight,
+              width: double.infinity,
+              color: Colors.black45,
             ):Container(),
             Column(
               children: [
@@ -121,10 +116,14 @@ class MainMenuAllOptions extends StatelessWidget {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                child:  AnimatedSize(
-                  curve: Curves.linear,
-                  duration: new Duration(milliseconds: 300),
-                  child: Container(
+                child:  GestureDetector(
+                  onVerticalDragUpdate: (details){
+                    mainPageController.closeDraggingUpdateAddressRequestContainer(details.delta.dy);
+                  },
+                  onVerticalDragEnd: (details){
+                    mainPageController.closeDraggingEndAddressRequestContainer();
+                  },
+                  child: AnimatedContainer(
                     height: mainPageController.addressRequestContainerHeight,
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -133,6 +132,7 @@ class MainMenuAllOptions extends StatelessWidget {
                             topRight: Radius.circular(Dimensions.radius30)
                         )
                     ),
+                    duration: Duration(milliseconds: 300),
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 24.0,vertical: 18.0),
                       child: SingleChildScrollView(
@@ -247,7 +247,7 @@ class MainMenuAllOptions extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
+                  )
                 )
             ),
             mainPageController.isOpenDeleteAddressRequestContainer ?

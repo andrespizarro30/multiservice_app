@@ -39,7 +39,9 @@ class SelectAddressPage extends StatelessWidget {
 
         if(controller.currentPosition.latitude != 0 && controller.currentPosition.longitude != 0){
           CameraPosition cameraPosition = new CameraPosition(target: controller.currentPosition, zoom: 14);
-          newGoogleMapController!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+          if(newGoogleMapController!=null){
+            newGoogleMapController!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+          }
         }
 
         return Stack(

@@ -48,6 +48,32 @@ class MainPageController extends GetxController implements GetxService{
 
   }
 
+  void closeDraggingUpdateAddressRequestContainer(double dy){
+
+    _addressRequestContainerHeight = _addressRequestContainerHeight - dy;
+    if(_addressRequestContainerHeight<Dimensions.screenHeight * 0.3){
+      _isOpenAddressRequestContainer = false;
+    }else{
+      _isOpenAddressRequestContainer = true;
+    }
+
+    update();
+
+  }
+
+  void closeDraggingEndAddressRequestContainer(){
+
+    if(_addressRequestContainerHeight<Dimensions.screenHeight * 0.3){
+      _isOpenAddressRequestContainer = false;
+      _addressRequestContainerHeight=0;
+    }else{
+      _addressRequestContainerHeight = Dimensions.screenHeight * 0.7;
+    }
+
+    update();
+
+  }
+
   void openDeleteAdressRequestContainer(){
 
     _isOpenDeleteAddressRequestContainer = !_isOpenDeleteAddressRequestContainer;
