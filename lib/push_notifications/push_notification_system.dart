@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:multiservice_app/controllers/chat_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../base/show_custom_message.dart';
 import '../local_notifications/local_notification_service.dart';
 import '../models/chat_message_model.dart';
 import '../routes/routes_helper.dart';
@@ -50,12 +51,14 @@ class PushNotificationSystem{
 
         Get.find<ChatPageController>().setPendingMessageNumber(chatMessageModel.receiverId!, chatMessageModel.senderId!);
 
+
         if(Platform.isAndroid){
           LocalNotificationService().showNotificationAndroid(chatMessageModel);
         }else
         if(Platform.isIOS){
           LocalNotificationService().showNotificationIos(chatMessageModel);
         }
+
 
       }
     });

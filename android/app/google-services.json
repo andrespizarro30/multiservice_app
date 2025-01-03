@@ -1,29 +1,3 @@
 {
-  "project_info": {
-    "project_number": "204447339072",
-    "project_id": "multiservicesapp-5d27b",
-    "storage_bucket": "multiservicesapp-5d27b.appspot.com"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:204447339072:android:dc2c9843feb89ee61745a5",
-        "android_client_info": {
-          "package_name": "com.afsoftwaresolutions.multiservice_app"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAgCJN9dLPEh4EjigvXnstNdPwJ4O6bTy4"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    }
-  ],
-  "configuration_version": "1"
+
 }
